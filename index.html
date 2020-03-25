@@ -16,6 +16,7 @@
 
 
     <div id="mainApp">
+        
         <div id="regionButtons">
             <div class="regionButton " v-on:click="changeRegion('USA')"
                 v-bind:class="{ regionButtonInactive: activeRegion != 'USA' }">USA</div>
@@ -23,24 +24,29 @@
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Italy' }">Italy</div>
             <div class="regionButton " v-on:click="changeRegion('Spain')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
+            <div class="regionButton " v-on:click="changeRegion('New York')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'New York' }">New York</div>
+            <div class="regionButton " v-on:click="changeRegion('California')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'California' }">California</div>
             <div class="regionButton " v-on:click="changeRegion('Minnesota')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Minnesota' }">Minnesota</div>
         </div>
+        
         <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
                 the curve?</a></h1>
         <h2 class="weAreNot" v-bind:class="{ weAre: region.areWe == 'Yes' }">{{region.areWe}}.</h2>
         <p>
-            At the current recorded rate of infections we would reach <a href="#methodology">critical point</a> by
+            At the current rate of infections we will reach <a href="#methodology">critical point</a> by
             <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
         </p>
         <p>
             With about <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we would
-            run short of the estimated
-            <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system and the
-            case fatality rate could increase.
-        </p>
-
-        
+            need <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>
+            ventilators (required by {{(ventilatorRate*10000/100).toLocaleString()}}% of all cases)
+            which would exceed the estimated
+            <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system. At that point the
+            case fatality rate would increase.
+        </p> 
 
         <div id="chartButtons">
             <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: bigPictureActive }">
@@ -56,7 +62,7 @@
         <p class="note">
             Italy is currently flattening the curve, proving that it is still possible. 
             It does however require decisive concerted action at the national level.<br/>
-            No state in the USA has currently mesures in place comparable to those of Italy or Spain.
+            No state in the USA currently has measures in place comparable to those of Italy or Spain.
         </p>
 
         <h2 id="methodology">Methodology</h2>
@@ -65,7 +71,9 @@
                 href="https://www.nytimes.com/2020/03/22/opinion/health/ventilator-shortage-coronavirus-solution.html"
                 target="_blank">{{(ventilatorRate*10000/100).toLocaleString()}}% of cases require ventilators</a>.
             We are defining "critical point" here as the point where the number of active patients requiring ventilators
-            is higher than the number of ventilators available.
+            is higher than the number of ventilators available. It may be noted that a big percentage of ventilators are normally in use
+            for other types of patients,
+            so the critical point my actually arrive much sooner.
         </p>
         <p>
             <b>Projection of active cases</b>. We take the average increase of the last {{daysForTrend}} days and
@@ -76,7 +84,7 @@
                 target="_blank">
                 40% to 80%</a> and in future versions we will let users tinker
             with this value).
-            We linearly decrease the growth rate as more people get infected, and substract the cases that
+            We linearly decrease the growth rate as more people get infected, and subtract the cases that
             are more than <a
                 href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf"
                 target="_blank">{{recoveryDays}} days</a> old.
@@ -91,6 +99,18 @@
             We will adjust all these numbers over time.
         </p>
 
+        <h2>Issues/suggestions</h2>
+        <p>
+            You can open an issue in the <a href="https://github.com/cronopista/areweflatteningthecurve/issues" target="_blank">Github site</a> for this page 
+            if you think that the methodology can be improved or the data is incorrect. 
+        </p>
+        <p>
+            If you would like to see your region, you can also get in touch through <a href="https://github.com/cronopista/areweflatteningthecurve/" target="_blank">Github</a>
+            or even grab the code and start your own site.
+
+        </p>
+
+      
     </div>
     <script src="data.js"></script>
     <script src="app.js"></script>
