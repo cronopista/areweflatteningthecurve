@@ -1,0 +1,104 @@
+#chartjs-tooltip {
+    opacity: 1;
+    position: absolute;
+    background: rgba(0, 0, 0, .7);
+    color: white;
+    border-radius: 3px;
+    -webkit-transition: all .1s ease;
+    transition: all .1s ease;
+    pointer-events: none;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+#chartjs-tooltip table {
+    color: white;
+}
+
+#mainApp {
+    font-family: 'Noto Sans', sans-serif;
+    width: 60vw;
+    margin: auto
+}
+
+#chartParent {
+    position: relative;
+    
+   
+}
+
+#chartButtons {
+    border-bottom: 1px solid #555;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.chartButton {
+    height: 40px;
+    line-height: 40px;
+    padding: 10px;
+    font-size: 24px;
+    border-bottom: 4px solid transparent;
+}
+
+.chartButtonInactive {
+    color: #999;
+    cursor: pointer;
+}
+
+.chartButtonInactive:hover {
+    border-bottom: 4px solid  rgba(255, 166, 0, 0.411);
+}
+
+
+#regionButtons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.regionButton {
+    height: 20px;
+    line-height: 20px;
+    padding: 10px;
+    font-size: 18px;
+    border-bottom: 4px solid transparent;
+}
+
+.regionButtonInactive {
+    color: #999;
+    cursor: pointer;
+}
+
+.regionButtonInactive:hover {
+    border-bottom: 4px solid rgba(255, 166, 0, 0.411);
+}
+
+.weAreNot{
+    color: red;
+}
+
+.weAre{
+    color: green;
+}
+
+.note{
+    background-color: rgb(255,255,55,0.2);
+    padding: 15px;
+    border: 1px solid rgb(255,255,55,1);
+    border-radius: 10px;
+    font-size: 10pt;
+}
+
+a{
+    color: black;
+}
+
+@media only screen and (max-width: 1000px) {
+    #mainApp {
+     
+        width: 90vw;
+      
+    } 
+}

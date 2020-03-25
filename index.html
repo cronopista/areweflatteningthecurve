@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <title>Are we flattening the curve?</title>
+    <meta name="description" content="Projection of the coronavirus pandemic based on current trends. We update this page daily."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="lib/vue.js"></script>
+    <script src="lib/Chart.js"></script>
+    <script src="lib/chartjs-plugin-annotation.js"></script>
+    <link href="styles.css" rel="stylesheet" media="screen" />
+
+
+</head>
+
+<body>
+
+
+    <div id="mainApp">
+        <div id="regionButtons">
+            <div class="regionButton " v-on:click="changeRegion('USA')"
+                v-bind:class="{ regionButtonInactive: activeRegion != 'USA' }">USA</div>
+            <div class="regionButton " v-on:click="changeRegion('Italy')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'Italy' }">Italy</div>
+            <div class="regionButton " v-on:click="changeRegion('Spain')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
+            <div class="regionButton " v-on:click="changeRegion('Minnesota')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'Minnesota' }">Minnesota</div>
+        </div>
+        <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
+                the curve?</a></h1>
+        <h2 class="weAreNot" v-bind:class="{ weAre: region.areWe == 'Yes' }">{{region.areWe}}.</h2>
+        <p>
+            At the current recorded rate of infections we would reach <a href="#methodology">critical point</a> by
+            <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
+        </p>
+        <p>
+            With about <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we would
+            run short of the estimated
+            <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system and the
+            case fatality rate could increase.
+        </p>
+
+        
+
+        <div id="chartButtons">
+            <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: bigPictureActive }">
+                Near future</div>
+            <div class="chartButton " v-on:click="bigPicture" v-bind:class="{ chartButtonInactive: !bigPictureActive }">
+                Complete picture</div>
+        </div>
+        <div id="chartParent">
+
+            <canvas id="growthChart"></canvas>
+        </div>
+
+        <p class="note">
+            Italy is currently flattening the curve, proving that it is still possible. 
+            It does however require decisive concerted action at the national level.<br/>
+            No state in the USA has currently mesures in place comparable to those of Italy or Spain.
+        </p>
+
+        <h2 id="methodology">Methodology</h2>
+        <p>
+            <b>Critical point</b>. It is estimated that <a
+                href="https://www.nytimes.com/2020/03/22/opinion/health/ventilator-shortage-coronavirus-solution.html"
+                target="_blank">{{(ventilatorRate*10000/100).toLocaleString()}}% of cases require ventilators</a>.
+            We are defining "critical point" here as the point where the number of active patients requiring ventilators
+            is higher than the number of ventilators available.
+        </p>
+        <p>
+            <b>Projection of active cases</b>. We take the average increase of the last {{daysForTrend}} days and
+            project it into the future until we reach the point
+            where {{(totalInfectionEstimate*10000/100).toLocaleString()}}% of the population has been infected
+            (estimates for total infection vary from <a
+                href="https://www.washingtonpost.com/health/coronavirus-forecasts-are-grim-its-going-to-get-worse/2020/03/11/2a177e0a-63b4-11ea-acca-80c22bbee96f_story.html"
+                target="_blank">
+                40% to 80%</a> and in future versions we will let users tinker
+            with this value).
+            We linearly decrease the growth rate as more people get infected, and substract the cases that
+            are more than <a
+                href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf"
+                target="_blank">{{recoveryDays}} days</a> old.
+        </p>
+        <p>
+            <b>Fatalities</b>. This is even more guesswork than the rest, 
+            <a href="https://ourworldindata.org/coronavirus#what-do-we-know-about-the-risk-of-dying-from-covid-19" target="_blank">given the uncertainty</a>. 
+            We are currently calculating based on a case fatality rate of {{(fatalityRateOptimal*10000/100).toLocaleString()}}% before crisis point and 
+            {{(fatalityRateSuboptimal*10000/100).toLocaleString()}}% after.
+        </p>
+        <p>
+            We will adjust all these numbers over time.
+        </p>
+
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
