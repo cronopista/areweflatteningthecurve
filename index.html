@@ -24,6 +24,8 @@
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Italy' }">Italy</div>
             <div class="regionButton " v-on:click="changeRegion('Spain')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
+            <div class="regionButton " v-on:click="changeRegion('Germany')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'Germany' }">Germany</div>
             <div class="regionButton " v-on:click="changeRegion('New York')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'New York' }">New York</div>
             <div class="regionButton " v-on:click="changeRegion('California')"
@@ -40,12 +42,12 @@
             <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
         </p>
         <p>
-            With about <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we would
+            With about <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, on this day we will
             need <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>
             ventilators (required by {{(ventilatorRate*10000/100).toLocaleString()}}% of all cases)
-            which would exceed the estimated
-            <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system. At that point the
-            case fatality rate would increase.
+            which will exceed the estimated
+            <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system. At this point the
+            case fatality rate will increase drastically.
         </p> 
 
         <div id="chartButtons">
@@ -73,7 +75,7 @@
             We are defining "critical point" here as the point where the number of active patients requiring ventilators
             is higher than the number of ventilators available. It may be noted that a big percentage of ventilators are normally in use
             for other types of patients,
-            so the critical point my actually arrive much sooner.
+            so the critical point might actually arrive much sooner.
         </p>
         <p>
             <b>Projection of active cases</b>. We take the average increase of the last {{daysForTrend}} days and
