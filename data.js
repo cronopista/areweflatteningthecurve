@@ -28,7 +28,8 @@ var regionData={
             24207,
             33546,
             43734,
-            54856
+            54856,
+            68211
         ],
         fatalitiesInitial: [
             6,
@@ -53,11 +54,11 @@ var regionData={
             302,
             413,
             555,
-            780
+            780,
+            1027
     
         ],
         totals: [],
-        increments: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],
@@ -123,7 +124,6 @@ var regionData={
     
         ],
         totals: [],
-        increments: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],
@@ -189,7 +189,6 @@ var regionData={
     
         ],
         totals: [],
-        increments: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],
@@ -221,7 +220,8 @@ var regionData={
             137,
             169,
             235,
-            262
+            261,
+            287
         ],
         fatalitiesInitial: [
             0,
@@ -242,11 +242,11 @@ var regionData={
             0,
             1,
             1,
+            1,
             1
     
         ],
         totals: [],
-        increments: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],
@@ -282,7 +282,8 @@ var regionData={
             25496,
             28768,
             35136,
-            42058
+            42058,
+            49515
         ],
         fatalitiesInitial: [
             0,
@@ -307,11 +308,11 @@ var regionData={
             1381,
             1772,
             2311,
-            2991
+            2991,
+            3647
     
         ],
         totals: [],
-        increments: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],
@@ -355,7 +356,8 @@ var regionData={
             53575,
             59138,
             63927,
-            69176
+            69176,
+            74386
         ],
         fatalitiesInitial: [
             3,
@@ -388,11 +390,11 @@ var regionData={
             4825,
             5476,
             6077,
-            6820
+            6820,
+            7503
     
         ],
         totals: [],
-        increments: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],
@@ -459,7 +461,70 @@ var regionData={
     
         ],
         totals: [],
-        increments: [],
+        activeReal: [],
+        activeCalculated: [],
+        labels: [],
+        healthCareLimitDate: new Date(),
+        healthCareLimitCalculated: 0,
+        areWe: 'No'
+    },
+    "India":{
+        startDate: new Date(2020, 2, 1),
+        ventilators: 8432,
+        ventilatorsSituation: "<a href='https://www.thehindubusinessline.com/news/national/from-best-to-worst-scenario-india-will-need-thousands-of-ventilators-upgraded-health-infra-to-tackle-virus-icmr/article31156295.ece' target='_blank'>8,432</a>",
+        population: 1330000000,
+        totalsInitial: [
+            5,
+            5,
+            28,
+            30,
+            31,
+            34,
+            39,
+            43,
+            56,
+            62,
+            73,
+            82,
+            102,
+            113,
+            119,
+            142,
+            156,
+            194,
+            244,
+            330,
+            396,
+            499,
+            536
+        ],
+        fatalitiesInitial: [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            4,
+            5,
+            4,
+            7,
+            10,
+            10
+                
+        ],
+        totals: [],
         activeReal: [],
         activeCalculated: [],
         labels: [],

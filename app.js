@@ -7,38 +7,12 @@ var daysForTrend = 5;
 
 var data = regionData["USA"];
 
-function calculate(data, dateLimit) {
-    data.healthCareLimit = Math.round(data.ventilators / ventilatorRate);
-    data.totals = [];
-    data.increments = [];
-    data.activeReal = [];
-    data.activeCalculated = [];
-    data.labels = [];
-    data.healthCareLimitDate = undefined;
-
-    for (var i = 0; i < data.totalsInitial.length; i++) {
-        data.totals.push(data.totalsInitial[i]);
-    }
-
-
-    for (var i = 1; i < data.totals.length; i++) {
-        data.increments.push(data.totals[i] - data.totals[i - 1]);
-    }
-
-    var fiveDayGrowthRate = 0;
-    for (i = data.increments.length - daysForTrend; i < data.increments.length; i++) {
-
-        fiveDayGrowthRate += data.increments[i] / data.increments[i - 1];
-    }
-
-    data.fiveDayGrowthRate = fiveDayGrowthRate / daysForTrend;
-    data.fiveDayGrowthRatePrint = Math.round(data.fiveDayGrowthRate * 100) / 100;
-    console.info("avg " + data.fiveDayGrowthRate);
-
+function calculateGrowing(data, dateLimit) {
     var currentTotal = data.totals[data.totals.length - 1];
     var growthRate = data.fiveDayGrowthRate;
     var maxPopulation = data.population * totalInfectionEstimate;
-    while (currentTotal < maxPopulation) {
+
+    while (currentTotal < maxPopulation && data.totals.length < 1000) {
         var previousTotal = currentTotal;
         var smoothGrowthRate = ((data.fiveDayGrowthRate - 1) / maxPopulation * currentTotal);
         growthRate = data.fiveDayGrowthRate - smoothGrowthRate;
@@ -48,10 +22,10 @@ function calculate(data, dateLimit) {
 
         currentTotal = Math.round(previousTotal * growthRate);
         data.totals.push(currentTotal);
-        data.increments.push(currentTotal - previousTotal);
 
 
     }
+
 
 
     var recoveries = 0;
@@ -86,16 +60,19 @@ function calculate(data, dateLimit) {
             data.healthCareLimitCalculated = data.activeCalculated[i];
             if (lengthIndex != -1) {
                 lengthIndex = i;
+                break;
             }
         }
 
         if (currentDate > dateLimit && lengthIndex == -1) {
             lengthIndex = i;
         }
+
         data.labels.push(currentDate.toLocaleDateString());
 
         currentDate.setDate(currentDate.getDate() + 1);
     }
+
 
     for (i = recoveryDays; i > 0; i--) {
         recoveries = data.totals[data.totals.length - i];
@@ -109,11 +86,97 @@ function calculate(data, dateLimit) {
         data.totals.push(currentTotal);
     }
 
+
     if (lengthIndex > -1) {
         lengthIndex++;
         data.labels = data.labels.slice(0, lengthIndex);
         data.activeReal = data.activeReal.slice(0, lengthIndex);
         data.activeCalculated = data.activeCalculated.slice(0, lengthIndex);
+    }
+}
+
+function calculateDiminishing(data, dateLimit) {
+    var currentTotal = data.totals[data.totals.length - 1];
+
+    data.areWe = "Yes";
+    while (data.totals.length < 1000) {
+        data.totals.push(currentTotal);
+    }
+
+    var recoveries = 0;
+    var currentDate = new Date(data.startDate);
+    var lengthIndex = -1;
+
+    for (i = 0; i < data.totals.length; i++) {
+        if (i > recoveryDays) {
+            recoveries = data.totals[i - recoveryDays];
+        }
+
+
+        if (i < data.totalsInitial.length) {
+            data.activeReal.push(data.totals[i] - recoveries);
+            data.activeCalculated.push(data.totals[i] - recoveries);
+
+        } else {
+            data.activeCalculated.push(data.totals[i] - recoveries);
+
+        }
+
+        if (currentDate > dateLimit) {
+            lengthIndex = i;
+        }
+
+        if (data.activeCalculated[i] <= 0 && lengthIndex == -1) {
+            lengthIndex = i;
+            data.eradicationDate = new Date(currentDate);
+            break;
+        }
+
+        data.labels.push(currentDate.toLocaleDateString());
+
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+  
+
+    if (lengthIndex > -1) {
+        lengthIndex++;
+        data.labels = data.labels.slice(0, lengthIndex);
+        data.activeReal = data.activeReal.slice(0, lengthIndex);
+        data.activeCalculated = data.activeCalculated.slice(0, lengthIndex);
+    }
+
+
+}
+
+
+function calculate(data, dateLimit) {
+    data.healthCareLimit = Math.round(data.ventilators / ventilatorRate);
+    data.totals = [];
+    data.activeReal = [];
+    data.activeCalculated = [];
+    data.labels = [];
+    data.healthCareLimitDate = undefined;
+
+    for (var i = 0; i < data.totalsInitial.length; i++) {
+        data.totals.push(data.totalsInitial[i]);
+    }
+
+
+    var fiveDayGrowthRate = 0;
+    for (i = data.totals.length - daysForTrend; i < data.totals.length; i++) {
+        console.info(data.totals[i] + " " + data.totals[i - 1] + " " + (data.totals[i] / data.totals[i - 1]));
+        fiveDayGrowthRate += data.totals[i] / data.totals[i - 1];
+    }
+
+    data.fiveDayGrowthRate = fiveDayGrowthRate / daysForTrend;
+    data.fiveDayGrowthRatePrint = Math.round(data.fiveDayGrowthRate * 100) / 100;
+    console.info("avg " + data.fiveDayGrowthRate);
+
+    if (data.fiveDayGrowthRate >= 1) {
+        calculateGrowing(data, dateLimit);
+    } else {
+        calculateDiminishing(data, dateLimit);
     }
 
 
@@ -279,10 +342,46 @@ function createChart() {
     });
 }
 
+var app;
 function recalculateForDate(days) {
+
+
+
     var dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + days);
     calculate(data, dateLimit);
+    if (!app) {
+        app = new Vue({
+            el: '#mainApp',
+            data: {
+                bigPictureActive: false,
+                ventilatorRate: ventilatorRate,
+                totalInfectionEstimate: totalInfectionEstimate,
+                recoveryDays: recoveryDays,
+                fatalityRateOptimal: fatalityRateOptimal,
+                fatalityRateSuboptimal: fatalityRateSuboptimal,
+                activeRegion: 'USA',
+                daysForTrend: daysForTrend,
+                region: data
+
+            },
+            methods: {
+                bigPicture: function (event) {
+                    recalculateForDate(5000);
+                },
+                nearFuture: function (event) {
+                    recalculateForDate(10);
+                },
+                changeRegion: function (region) {
+                    data = regionData[region];
+                    app.$data.region = data;
+                    app.$data.activeRegion = region;
+                    recalculateForDate(10);
+                }
+            }
+        });
+
+    }
     if (days > 1000) {
         app.$data.bigPictureActive = true;
     } else {
@@ -293,36 +392,6 @@ function recalculateForDate(days) {
     createChart();
 }
 
-
-var app = new Vue({
-    el: '#mainApp',
-    data: {
-        bigPictureActive: false,
-        ventilatorRate: ventilatorRate,
-        totalInfectionEstimate: totalInfectionEstimate,
-        recoveryDays: recoveryDays,
-        fatalityRateOptimal: fatalityRateOptimal,
-        fatalityRateSuboptimal: fatalityRateSuboptimal,
-        activeRegion: 'USA',
-        daysForTrend:daysForTrend,
-        region: data
-
-    },
-    methods: {
-        bigPicture: function (event) {
-            recalculateForDate(5000);
-        },
-        nearFuture: function (event) {
-            recalculateForDate(10);
-        },
-        changeRegion: function (region) {
-            data = regionData[region];
-            app.$data.region = data;
-            app.$data.activeRegion = region;
-            recalculateForDate(10);
-        }
-    }
-});
 
 recalculateForDate(10);
 

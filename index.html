@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
+
 <head>
     <title>Are we flattening the curve?</title>
-    <meta name="description" content="Projection of the coronavirus pandemic based on current trends. We update this page daily."/>
+    <meta name="description"
+        content="Projection of the coronavirus pandemic based on current trends. We update this page daily." />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="lib/vue.js"></script>
     <script src="lib/Chart.js"></script>
@@ -16,7 +18,7 @@
 
 
     <div id="mainApp">
-        
+
         <div id="regionButtons">
             <div class="regionButton " v-on:click="changeRegion('USA')"
                 v-bind:class="{ regionButtonInactive: activeRegion != 'USA' }">USA</div>
@@ -26,6 +28,8 @@
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
             <div class="regionButton " v-on:click="changeRegion('Germany')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Germany' }">Germany</div>
+            <div class="regionButton " v-on:click="changeRegion('India')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'India' }">India</div>
             <div class="regionButton " v-on:click="changeRegion('New York')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'New York' }">New York</div>
             <div class="regionButton " v-on:click="changeRegion('California')"
@@ -33,22 +37,27 @@
             <div class="regionButton " v-on:click="changeRegion('Minnesota')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Minnesota' }">Minnesota</div>
         </div>
-        
+
         <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
                 the curve?</a></h1>
         <h2 class="weAreNot" v-bind:class="{ weAre: region.areWe == 'Yes' }">{{region.areWe}}.</h2>
-        <p>
-            At the current rate of infections we will reach <a href="#methodology">critical point</a> by
-            <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
-        </p>
-        <p>
-            With about <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, on this day we will
-            need <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>
-            ventilators (required by {{(ventilatorRate*10000/100).toLocaleString()}}% of all cases)
-            which will exceed the estimated
-            <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system. At this point the
-            case fatality rate will increase drastically.
-        </p> 
+        <div v-if="region.areWe == 'No' || !region.eradicationDate">
+            <p>
+                We will reach <a href="#methodology">critical point</a> by
+                <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
+            </p>
+            <p>
+                On this day we will have <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases and
+                we will
+                need <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>
+                ventilators,
+                which will exceed the
+                <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system.
+            </p>
+        </div>
+        <div v-else>
+            TODO
+        </div>
 
         <div id="chartButtons">
             <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: bigPictureActive }">
@@ -61,11 +70,7 @@
             <canvas id="growthChart"></canvas>
         </div>
 
-        <p class="note">
-            Italy is currently flattening the curve, proving that it is still possible. 
-            It does however require decisive concerted action at the national level.<br/>
-            No state in the USA currently has measures in place comparable to those of Italy or Spain.
-        </p>
+       
 
         <h2 id="methodology">Methodology</h2>
         <p>
@@ -73,7 +78,8 @@
                 href="https://www.nytimes.com/2020/03/22/opinion/health/ventilator-shortage-coronavirus-solution.html"
                 target="_blank">{{(ventilatorRate*10000/100).toLocaleString()}}% of cases require ventilators</a>.
             We are defining "critical point" here as the point where the number of active patients requiring ventilators
-            is higher than the number of ventilators available. It may be noted that a big percentage of ventilators are normally in use
+            is higher than the number of ventilators available. It may be noted that a big percentage of ventilators are
+            normally in use
             for other types of patients,
             so the critical point might actually arrive much sooner.
         </p>
@@ -92,9 +98,11 @@
                 target="_blank">{{recoveryDays}} days</a> old.
         </p>
         <p>
-            <b>Fatalities</b>. This is even more guesswork than the rest, 
-            <a href="https://ourworldindata.org/coronavirus#what-do-we-know-about-the-risk-of-dying-from-covid-19" target="_blank">given the uncertainty</a>. 
-            We are currently calculating based on a case fatality rate of {{(fatalityRateOptimal*10000/100).toLocaleString()}}% before crisis point and 
+            <b>Fatalities</b>. This is even more guesswork than the rest,
+            <a href="https://ourworldindata.org/coronavirus#what-do-we-know-about-the-risk-of-dying-from-covid-19"
+                target="_blank">given the uncertainty</a>.
+            We are currently calculating based on a case fatality rate of
+            {{(fatalityRateOptimal*10000/100).toLocaleString()}}% before crisis point and
             {{(fatalityRateSuboptimal*10000/100).toLocaleString()}}% after.
         </p>
         <p>
@@ -103,16 +111,18 @@
 
         <h2>Issues/suggestions</h2>
         <p>
-            You can open an issue in the <a href="https://github.com/cronopista/areweflatteningthecurve/issues" target="_blank">Github site</a> for this page 
-            if you think that the methodology can be improved or the data is incorrect. 
+            You can open an issue in the <a href="https://github.com/cronopista/areweflatteningthecurve/issues"
+                target="_blank">Github site</a> for this page
+            if you think that the methodology can be improved or the data is incorrect.
         </p>
         <p>
-            If you would like to see your region, you can also get in touch through <a href="https://github.com/cronopista/areweflatteningthecurve/" target="_blank">Github</a>
+            If you would like to see your region, you can also get in touch through <a
+                href="https://github.com/cronopista/areweflatteningthecurve/" target="_blank">Github</a>
             or even grab the code and start your own site.
 
         </p>
 
-      
+
     </div>
     <script src="data.js"></script>
     <script src="app.js"></script>
