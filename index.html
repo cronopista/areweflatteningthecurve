@@ -65,13 +65,13 @@
             <div class="chartButton " v-on:click="bigPicture" v-bind:class="{ chartButtonInactive: !bigPictureActive }">
                 Complete picture</div>
         </div>
-        <div id="chartParent">
+        <div id="chartParent" >
 
-            <canvas id="growthChart"></canvas>
+            <canvas id="growthChart" ></canvas>
         </div>
 
         <p class="note">
-            These projections are based on current trends. But trends can change daily based on the efforts made by goverments
+            These projections are based on current trends. But trends change daily based on the efforts made by goverments
             and citizens.
         </p>
 
@@ -98,7 +98,7 @@
             We linearly decrease the growth rate as more people get infected, and subtract the cases that
             are more than <a
                 href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf"
-                target="_blank">{{recoveryDays}} days</a> old.
+                target="_blank">{{recoveryDays}} days</a> old (average recovery time).
         </p>
         <p>
             <b>Fatalities</b>. This is even more guesswork than the rest,

@@ -95,59 +95,6 @@ function calculateGrowing(data, dateLimit) {
     }
 }
 
-function calculateDiminishing(data, dateLimit) {
-    var currentTotal = data.totals[data.totals.length - 1];
-
-    data.areWe = "Yes";
-    while (data.totals.length < 1000) {
-        data.totals.push(currentTotal);
-    }
-
-    var recoveries = 0;
-    var currentDate = new Date(data.startDate);
-    var lengthIndex = -1;
-
-    for (i = 0; i < data.totals.length; i++) {
-        if (i > recoveryDays) {
-            recoveries = data.totals[i - recoveryDays];
-        }
-
-
-        if (i < data.totalsInitial.length) {
-            data.activeReal.push(data.totals[i] - recoveries);
-            data.activeCalculated.push(data.totals[i] - recoveries);
-
-        } else {
-            data.activeCalculated.push(data.totals[i] - recoveries);
-
-        }
-
-        if (currentDate > dateLimit) {
-            lengthIndex = i;
-        }
-
-        if (data.activeCalculated[i] <= 0 && lengthIndex == -1) {
-            lengthIndex = i;
-            data.eradicationDate = new Date(currentDate);
-            break;
-        }
-
-        data.labels.push(currentDate.toLocaleDateString());
-
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-  
-
-    if (lengthIndex > -1) {
-        lengthIndex++;
-        data.labels = data.labels.slice(0, lengthIndex);
-        data.activeReal = data.activeReal.slice(0, lengthIndex);
-        data.activeCalculated = data.activeCalculated.slice(0, lengthIndex);
-    }
-
-
-}
 
 
 function calculate(data, dateLimit) {
@@ -173,12 +120,8 @@ function calculate(data, dateLimit) {
     data.fiveDayGrowthRatePrint = Math.round(data.fiveDayGrowthRate * 100) / 100;
     console.info("avg " + data.fiveDayGrowthRate);
 
-    if (data.fiveDayGrowthRate >= 1) {
-        calculateGrowing(data, dateLimit);
-    } else {
-        calculateDiminishing(data, dateLimit);
-    }
-
+    calculateGrowing(data, dateLimit);
+    
 
 
     console.info(data);
@@ -304,6 +247,8 @@ function createChart() {
             }]
         },
         options: {
+            maintainAspectRatio : false,
+        
             scales: {
                 yAxes: [{
                     ticks: {

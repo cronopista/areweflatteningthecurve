@@ -22,15 +22,17 @@ body{
 
 #mainApp {
     font-family: 'Noto Sans', sans-serif;
-    width: 60vw;
+    width: 1000px;
     margin: auto
 }
 
 #chartParent {
     position: relative;
     margin-bottom: 60px;
+    height: 70vh;
    
 }
+
 
 #chartButtons {
     border-bottom: 1px solid #555;
@@ -103,9 +105,13 @@ a{
 }
 
 @media only screen and (max-width: 1000px) {
-    #mainApp {
-     
+    #mainApp { 
         width: 90vw;
-      
     } 
+
+    #chartParent {
+        height: 400px;
+       
+    }
+    
 }
