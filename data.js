@@ -29,7 +29,8 @@ var regionData={
             33546,
             43734,
             54856,
-            68211
+            68211,
+            85435
         ],
         fatalitiesInitial: [
             6,
@@ -55,7 +56,8 @@ var regionData={
             413,
             555,
             780,
-            1027
+            1027,
+            1295
     
         ],
         totals: [],
@@ -95,7 +97,8 @@ var regionData={
             28768,
             35136,
             42058,
-            49515
+            49515,
+            57786
         ],
         fatalitiesInitial: [
             0,
@@ -121,7 +124,8 @@ var regionData={
             1772,
             2311,
             2991,
-            3647
+            3647,
+            4365
     
         ],
         totals: [],
@@ -169,7 +173,8 @@ var regionData={
             59138,
             63927,
             69176,
-            74386
+            74386,
+            80589
         ],
         fatalitiesInitial: [
             3,
@@ -203,7 +208,8 @@ var regionData={
             5476,
             6077,
             6820,
-            7503
+            7503,
+            8215
     
         ],
         totals: [],
@@ -244,7 +250,8 @@ var regionData={
             24873,
             29056,
             32986,
-            37323
+            37323,
+            43938
         ],
         fatalitiesInitial: [
             0,
@@ -271,7 +278,8 @@ var regionData={
             94,
             123,
             157,
-            206
+            206,
+            267
     
         ],
         totals: [],
@@ -311,7 +319,8 @@ var regionData={
             396,
             499,
             536,
-            657
+            657,
+            727
         ],
         fatalitiesInitial: [
             0,
@@ -337,7 +346,8 @@ var regionData={
             7,
             10,
             10,
-            12
+            12,
+            20
                 
         ],
         totals: [],
@@ -378,7 +388,8 @@ var regionData={
             15793,
             20884,
             25681,
-            37258
+            37258,
+            44635
         ],
         fatalitiesInitial: [
             0,
@@ -404,7 +415,8 @@ var regionData={
             117,
             158,
             210,
-            385
+            385,
+            519
     
         ],
         totals: [],
@@ -445,7 +457,8 @@ var regionData={
             1642,
             2108,
             2538,
-            3183
+            3183,
+            4450
         ],
         fatalitiesInitial: [
             0,
@@ -471,7 +484,8 @@ var regionData={
             30,
             39,
             50,
-            67
+            67,
+            90
     
         ],
         totals: [],
@@ -508,7 +522,8 @@ var regionData={
             235,
             261,
             287,
-            346
+            346,
+            398
         ],
         fatalitiesInitial: [
             0,
@@ -531,7 +546,8 @@ var regionData={
             1,
             1,
             1,
-            2
+            2,
+            4
     
         ],
         totals: [],

@@ -15,6 +15,10 @@
 </head>
 
 <body>
+    <div class="title">
+        <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
+        the curve?</a></h1>
+    </div>
 
 
     <div id="mainApp">
@@ -38,12 +42,10 @@
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Minnesota' }">Minnesota</div>
         </div>
 
-        <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
-                the curve?</a></h1>
-        <h2 class="weAreNot" v-bind:class="{ weAre: region.areWe == 'Yes' }">{{region.areWe}}.</h2>
+        <h1 class="weAreNot" v-bind:class="{ weAre: region.areWe == 'Yes' }">{{region.areWe}}.</h1>
         <div v-if="region.areWe == 'No' || !region.eradicationDate">
             <p>
-                We will reach <a href="#methodology">critical point</a> by
+                At this rate we will reach <a href="#methodology">critical point</a> by
                 <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
             </p>
             <p>
@@ -53,6 +55,9 @@
                 ventilators,
                 which will exceed the
                 <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system.
+            </p>
+            <p class="disclaimer">
+                <b>Disclaimer</b>: obviously  these dates and figures are ballpark estimates based on very imperfect data.
             </p>
         </div>
         <div v-else>
@@ -93,8 +98,7 @@
             (estimates for total infection vary from <a
                 href="https://www.washingtonpost.com/health/coronavirus-forecasts-are-grim-its-going-to-get-worse/2020/03/11/2a177e0a-63b4-11ea-acca-80c22bbee96f_story.html"
                 target="_blank">
-                40% to 80%</a> and in future versions we will let users tinker
-            with this value).
+                40% to 80%</a>).
             We linearly decrease the growth rate as more people get infected, and subtract the cases that
             are more than <a
                 href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf"
