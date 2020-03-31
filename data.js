@@ -1,8 +1,8 @@
 var regionData={
     "USA":{
-    
         startDate: new Date(2020, 2, 2),
         ventilators: 170000,
+        fixComparition: 8,
         ventilatorsSituation:'<a href="https://www.nytimes.com/2020/03/12/upshot/coronavirus-biggest-worry-hospital-capacity.html" target="_blank">170,000</a>',
         population: 327200000,
         totalsInitial: [
@@ -30,7 +30,11 @@ var regionData={
             43734,
             54856,
             68211,
-            85435
+            85435,
+            104126,
+            123578,
+            143491,
+            163844
         ],
         fatalitiesInitial: [
             6,
@@ -57,20 +61,18 @@ var regionData={
             555,
             780,
             1027,
-            1295
+            1295,
+            1696,
+            2220,
+            2583,
+            3156
     
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        fatalities: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0
+        ]
     },
     "Spain":{
         startDate: new Date(2020, 2, 2),
         ventilators: 12000,
+        fixComparition: 7,
         ventilatorsSituation: "<a href='https://www.elespanol.com/ciencia/salud/20200325/escandalo-respiradores-espana-distribuirlos-no-sabe/477202839_0.html' target='_blank'>12,000 (pure guesswork as the real number is currently unknown)</a>",
         population: 46000000,
         totalsInitial: [
@@ -98,7 +100,11 @@ var regionData={
             35136,
             42058,
             49515,
-            57786
+            57786,
+            65719,
+            73235,
+            80110,
+            87956
         ],
         fatalitiesInitial: [
             0,
@@ -125,20 +131,18 @@ var regionData={
             2311,
             2991,
             3647,
-            4365
+            4365,
+            5138,
+            5982,
+            6803,
+            7716
     
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0,
-        areWe: 'No'
+        ]
     },
     "Italy":{
         startDate: new Date(2020, 1, 23),
         ventilators: 13000,
+        fixComparition: 6,
         ventilatorsSituation: "<a href='https://www.reuters.com/article/us-health-coronavirus-ventilators-insigh/army-joins-the-production-line-as-ventilator-makers-scramble-to-meet-demand-idUSKBN2180JU' target='_blank'>12,000 (guesswork as the real number is hard to find)</a>",
         population: 60500000,
         totalsInitial: [
@@ -174,7 +178,11 @@ var regionData={
             63927,
             69176,
             74386,
-            80589
+            80589,
+            86498,
+            92472,
+            97689,
+            101739
         ],
         fatalitiesInitial: [
             3,
@@ -209,20 +217,18 @@ var regionData={
             6077,
             6820,
             7503,
-            8215
+            8215,
+            9134,
+            10023,
+            10779,
+            11591
     
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0,
-        areWe: 'No'
+        ]
     },
     "Germany":{
         startDate: new Date(2020, 2, 1),
         ventilators: 25000,
+        fixComparition: 7,
         ventilatorsSituation: "<a href='https://www.nytimes.com/2020/03/17/opinion/coronavirus-europe-germany.html' target='_blank'>25,000</a>",
         population: 83000000,
         totalsInitial: [
@@ -251,7 +257,11 @@ var regionData={
             29056,
             32986,
             37323,
-            43938
+            43938,
+            50871,
+            57605,
+            62435,
+            66885
         ],
         fatalitiesInitial: [
             0,
@@ -279,20 +289,88 @@ var regionData={
             123,
             157,
             206,
-            267
+            267,
+            351,
+            433,
+            541,
+            645
     
+        ]
+    },
+    "UK":{
+        startDate: new Date(2020, 2, 2),
+        ventilators: 8000,
+        fixComparition: 12,
+        ventilatorsSituation:'<a href="https://www.theguardian.com/world/2020/mar/30/uk-government-orders-more-ventilators-for-coronavirus-crisis" target="_blank">8,000</a>',
+        population: 66440000,
+        totalsInitial: [
+            40,
+            51,
+            85,
+            115,
+            163,
+            206,
+            273,
+            321,
+            382,
+            456,
+            456,
+            798,
+            1140,
+            1140,
+            1543,
+            1950,
+            2626,
+            2689,
+            3983,
+            5018,
+            5683,
+            6650,
+            8077,
+            9529,
+            11658,
+            14543,
+            17089,
+            19522,
+            22141
         ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0,
-        areWe: 'No'
+        fatalitiesInitial: [
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            3,
+            4,
+            6,
+            8,
+            8,
+            8,
+            21,
+            21,
+            55,
+            55,
+            71,
+            137,
+            177,
+            233,
+            281,
+            335,
+            422,
+            465,
+            578,
+            759,
+            1019,
+            1228,
+            1408
+    
+        ]
     },
     "India":{
         startDate: new Date(2020, 2, 2),
         ventilators: 8432,
+        fixComparition: 15,
         ventilatorsSituation: "<a href='https://www.thehindubusinessline.com/news/national/from-best-to-worst-scenario-india-will-need-thousands-of-ventilators-upgraded-health-infra-to-tackle-virus-icmr/article31156295.ece' target='_blank'>8,432</a>",
         population: 1330000000,
         totalsInitial: [
@@ -320,7 +398,10 @@ var regionData={
             499,
             536,
             657,
-            727
+            727,
+            887,
+            987,
+            1024
         ],
         fatalitiesInitial: [
             0,
@@ -347,21 +428,18 @@ var regionData={
             10,
             10,
             12,
-            20
+            20,
+            20,
+            24,
+            27
                 
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0,
-        areWe: 'No'
+        ]
     },
     "New York":{
     
         startDate: new Date(2020, 2, 2),
         ventilators: 12000,
+        fixComparition: 14,
         ventilatorsSituation:'<a href="https://www.nytimes.com/2020/03/17/nyregion/ny-coronavirus-ventilators.html" target="_blank">12,000</a>',
         population: 20000000,
         totalsInitial: [
@@ -389,7 +467,10 @@ var regionData={
             20884,
             25681,
             37258,
-            44635
+            44635,
+            52318,
+            59513,
+            66526
         ],
         fatalitiesInitial: [
             0,
@@ -416,21 +497,17 @@ var regionData={
             158,
             210,
             385,
-            519
+            519,
+            728,
+            965,
+            1220
     
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        fatalities: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0
+        ]
     },
     "California":{
-    
         startDate: new Date(2020, 2, 2),
         ventilators: 15000,
+        fixComparition: 17,
         ventilatorsSituation:'15,000 (<a href="https://www.nytimes.com/2020/03/23/us/california-coronavirus-testing-masks.html" target="_blank">guesswork, as the data seems currently unavailable</a>)',
         population: 40000000,
         totalsInitial: [
@@ -458,7 +535,10 @@ var regionData={
             2108,
             2538,
             3183,
-            4450
+            4450,
+            4914,
+            5735,
+            6346
         ],
         fatalitiesInitial: [
             0,
@@ -485,20 +565,17 @@ var regionData={
             39,
             50,
             67,
-            90
+            90,
+            103,
+            124,
+            132
     
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        fatalities: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0
+        ]
     },
     "Minnesota":{
         startDate: new Date(2020, 2, 6),
         ventilators: 1090,
+        fixComparition: 12,
         ventilatorsSituation:'<a href="https://www.fox9.com/news/minnesota-hospitals-increasing-capacity-ventilators" target="_blank">1,090</a>',
         population: 5000000,
         totalsInitial: [
@@ -523,7 +600,10 @@ var regionData={
             261,
             287,
             346,
-            398
+            398,
+            441,
+            504,
+            576
         ],
         fatalitiesInitial: [
             0,
@@ -547,16 +627,12 @@ var regionData={
             1,
             1,
             2,
-            4
+            4,
+            5,
+            9,
+            10
     
-        ],
-        totals: [],
-        activeReal: [],
-        activeCalculated: [],
-        labels: [],
-        healthCareLimitDate: new Date(),
-        healthCareLimitCalculated: 0,
-        areWe: 'No'
+        ]
     }
 
 };

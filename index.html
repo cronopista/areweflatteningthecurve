@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Are we flattening the curve?</title>
+    <title>Are we flattening the curve? Data updated twice daily.</title>
     <meta name="description"
         content="Projection of the coronavirus pandemic based on current trends. We update this page daily." />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,11 +16,12 @@
 
 <body>
     <div class="title">
+       
         <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
         the curve?</a></h1>
     </div>
 
-
+   
     <div id="mainApp">
 
         <div id="regionButtons">
@@ -32,6 +33,8 @@
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
             <div class="regionButton " v-on:click="changeRegion('Germany')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Germany' }">Germany</div>
+            <div class="regionButton " v-on:click="changeRegion('UK')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'UK' }">UK</div>
             <div class="regionButton " v-on:click="changeRegion('India')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'India' }">India</div>
             <div class="regionButton " v-on:click="changeRegion('New York')"
@@ -41,34 +44,31 @@
             <div class="regionButton " v-on:click="changeRegion('Minnesota')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Minnesota' }">Minnesota</div>
         </div>
+       
+        <p>
+            <h2 class="weAre" v-bind:class="{ weAreNot:  region.areWe == 'No' }">{{region.areWe}}.</h2> 
+        </p>
+        <p v-if="region.areWe == 'Yes' ">
+            Our projection is better than it was 5 days ago, but further efforts need to be done. 
+            At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
+        </p>
+        <p v-if="region.areWe == 'No' ">
+            Our projection is worse than it was 5 days ago. Further efforts need to be done. 
+            At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
+        </p>
 
-        <h1 class="weAreNot" v-bind:class="{ weAre: region.areWe == 'Yes' }">{{region.areWe}}.</h1>
-        <div v-if="region.areWe == 'No' || !region.eradicationDate">
-            <p>
-                At this rate we will reach <a href="#methodology">critical point</a> by
-                <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
-            </p>
-            <p>
-                On this day we will have <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases and
-                we will
-                need <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>
-                ventilators,
-                which will exceed the
-                <b v-html="region.ventilatorsSituation"></b> ventilators available in the health care system.
-            </p>
-            <p class="disclaimer">
-                <b>Disclaimer</b>: obviously  these dates and figures are ballpark estimates based on very imperfect data.
-            </p>
-        </div>
-        <div v-else>
-            TODO
-        </div>
+        <p class="disclaimer">
+            <b>Disclaimer</b>: obviously  these dates and figures are ballpark estimates based on very imperfect data.
+        </p>
+    
+       
 
         <div id="chartButtons">
-            <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: bigPictureActive }">
-                Near future</div>
             <div class="chartButton " v-on:click="bigPicture" v-bind:class="{ chartButtonInactive: !bigPictureActive }">
                 Complete picture</div>
+            <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: bigPictureActive }">
+                Near future</div>
+            
         </div>
         <div id="chartParent" >
 
@@ -76,20 +76,26 @@
         </div>
 
         <p class="note">
-            These projections are based on current trends. But trends change daily based on the efforts made by goverments
-            and citizens.
+            Trends change daily based on the efforts made by goverments
+            and citizens. You can see the evolution of the trend by comparing the current projection with the projection 
+            from 5 days ago and the one from {{region.labels[region.fixComparition]}}, when there were {{region.totals[region.fixComparition].toLocaleString()}}
+            active cases.<br/>
+            Data updated twice daily.
         </p>
-
+        
+      
+        
         <h2 id="methodology">Methodology</h2>
         <p>
-            <b>Critical point</b>. It is estimated that <a
+            <b>Health care system capacity</b>. It is estimated that <a
                 href="https://www.nytimes.com/2020/03/22/opinion/health/ventilator-shortage-coronavirus-solution.html"
                 target="_blank">{{(ventilatorRate*10000/100).toLocaleString()}}% of cases require ventilators</a>.
-            We are defining "critical point" here as the point where the number of active patients requiring ventilators
-            is higher than the number of ventilators available. It may be noted that a big percentage of ventilators are
-            normally in use
-            for other types of patients,
-            so the critical point might actually arrive much sooner.
+            We are defining the capacity of the health care system by the number of available ventilators. 
+            We currently have <b v-html="region.ventilatorsSituation"></b>. When we reach 
+            <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we will need 
+            <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>.
+            It may be noted that a big percentage of ventilators are normally in use for other types of patients,
+            so the health care system might actually be overwhelmed much sooner.
         </p>
         <p>
             <b>Projection of active cases</b>. We take the average increase of the last {{daysForTrend}} days and

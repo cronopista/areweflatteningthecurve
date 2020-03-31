@@ -87,12 +87,14 @@ body{
     border-bottom: 4px solid rgba(255, 166, 0, 0.411);
 }
 
-.weAreNot{
-    color: red;
-}
+
 
 .weAre{
     color: green;
+}
+
+.weAreNot{
+    color: red;
 }
 
 .note{
@@ -121,6 +123,11 @@ a{
     width: 1000px;
     margin: auto;
 
+}
+
+.title h1 img{
+    width: 40px;
+  
 }
 
 .title a{
