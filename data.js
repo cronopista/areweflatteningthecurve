@@ -436,7 +436,7 @@ var regionData={
         ]
     },
     "Portugal":{
-        startDate: new Date(2020, 3, 2),
+        startDate: new Date(2020, 2, 2),
         ventilators: 1142+535,
         fixComparition: 18,
         ventilatorsSituation: "<a href='https://observador.pt/especiais/governo-comprou-535-ventiladores-agora-e-preciso-ter-equipas-e-decidir-como-vao-ser-distribuidos/' target='_blank'>1142+535</a>",
