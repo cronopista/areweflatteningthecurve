@@ -57,6 +57,17 @@ function calculateTotals(currentTotal, fiveDayGrowthRate, maxPopulation, totalsI
     return totals;
 }
 
+function calculateActive(totals){
+    var active = [];
+    for (i = 0; i < totals.length; i++) {
+        if (i+recoveryDays < totals.length-1) {
+            recoveries = totals[i];
+        }
+        active.push(totals[i] - recoveries);
+    }
+}
+
+
 function calculate(initialData, dateLimit) {
     var data = initData(initialData);
 
@@ -68,6 +79,9 @@ function calculate(initialData, dateLimit) {
 
     data.totals = calculateTotals(currentTotal, fiveDayGrowthRate, maxPopulation, data.totalsInitial);
     currentTotal = data.totals[data.totals.length - 1];
+
+    
+
 
     var recoveries = 0;
     var currentDate = new Date(data.startDate);
