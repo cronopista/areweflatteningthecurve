@@ -401,7 +401,8 @@ var regionData={
             727,
             887,
             987,
-            1024
+            1024,
+            1251
         ],
         fatalitiesInitial: [
             0,
@@ -431,7 +432,8 @@ var regionData={
             20,
             20,
             24,
-            27
+            27,
+            32
                 
         ]
     },
@@ -542,7 +544,8 @@ var regionData={
             44635,
             52318,
             59513,
-            66526
+            66526,
+            75813            
         ],
         fatalitiesInitial: [
             0,
@@ -572,7 +575,8 @@ var regionData={
             519,
             728,
             965,
-            1220
+            1220,
+            1550
     
         ]
     },
@@ -610,7 +614,8 @@ var regionData={
             4450,
             4914,
             5735,
-            6346
+            6346,
+            7566
         ],
         fatalitiesInitial: [
             0,
@@ -640,7 +645,8 @@ var regionData={
             90,
             103,
             124,
-            132
+            132,
+            155
     
         ]
     },
@@ -675,7 +681,8 @@ var regionData={
             398,
             441,
             504,
-            576
+            576,
+            629
         ],
         fatalitiesInitial: [
             0,
@@ -702,7 +709,8 @@ var regionData={
             4,
             5,
             9,
-            10
+            10,
+            12
     
         ]
     }
