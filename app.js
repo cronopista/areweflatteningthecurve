@@ -55,10 +55,11 @@ function createChart(data) {
             label: 'Long term trend',
             data: data.longTermActive,
             backgroundColor:
-                'transparent',
+                'rgba(0, 100, 0, 0.1)',
             borderColor:
-                'rgba(0, 100, 0, 0.5)',
+                'rgba(0, 100, 0, 0.9)',
             borderWidth: 1,
+            borderDash: [4, 4],
             pointRadius: 0
         });
     }
