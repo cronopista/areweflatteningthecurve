@@ -51,11 +51,11 @@
             <h2 class="weAre" v-bind:class="{ weAreNot:  region.areWe == 'No' }">{{region.areWe}}.</h2> 
         </p>
         <p v-if="region.areWe == 'Yes' ">
-            Our projection is better than it was 5 days ago, but further efforts need to be done. 
+            Our projection is better than it was 5 days ago, but further efforts need to be made. 
             At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
         </p>
         <p v-if="region.areWe == 'No' ">
-            Our projection is worse than it was 5 days ago. Further efforts need to be done. 
+            Our projection is worse than it was 5 days ago. Further efforts need to be made. 
             At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
         </p>
 
