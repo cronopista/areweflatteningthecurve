@@ -51,6 +51,16 @@ function createChart(data) {
     };
     if (!data.activeCalculated10daysAgo) {
         chartData.datasets = chartData.datasets.splice(0, 2);
+        chartData.datasets.push({
+            label: 'Long term trend',
+            data: data.longTermActive,
+            backgroundColor:
+                'transparent',
+            borderColor:
+                'rgba(0, 100, 0, 0.5)',
+            borderWidth: 1,
+            pointRadius: 0
+        });
     }
 
     var growthChart = new Chart(ctx, {
