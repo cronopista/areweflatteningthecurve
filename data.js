@@ -449,9 +449,9 @@ var regionData={
     },
     "Portugal":{
         startDate: new Date(2020, 2, 2),
-        ventilators: 1142+535,
+        ventilators: 1142+1142,
         fixComparition: 18,
-        ventilatorsSituation: "<a href='https://observador.pt/especiais/governo-comprou-535-ventiladores-agora-e-preciso-ter-equipas-e-decidir-como-vao-ser-distribuidos/' target='_blank'>1142+535</a>",
+        ventilatorsSituation: "<a href='https://observador.pt/2020/04/01/eua-ultrapassam-as-860-mortes-pelo-novo-coronavirus-num-so-dia/#479878' target='_blank'>1142×2</a>",
         population: 10276617, // Source: https://www.ine.pt/xportal/xmain?xpid=INE&xpgid=ine_indicadores&contecto=pi&indOcorrCod=0008273&selTab=tab0
         totalsInitial: [
             2,
@@ -483,7 +483,8 @@ var regionData={
             5170,
             5962,
             6408,
-            7443
+            7443,
+            8251
         ],
         fatalitiesInitial: [
             0,
@@ -515,7 +516,8 @@ var regionData={
             100,
             119,
             140,
-            160
+            160,
+            187
     
         ]
     },
