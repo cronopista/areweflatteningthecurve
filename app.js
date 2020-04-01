@@ -1,162 +1,8 @@
 Chart.defaults.global.pointHitDetectionRadius = 1;
 
 
-var totalInfectionEstimate = 0.5;
-var ventilatorRate = 0.023;
-var recoveryDays = 17;
-var fatalityRateOptimal = 0.01;
-var fatalityRateSuboptimal = 0.025;
-var daysForTrend = 5;
-
-
-
 var initialData = regionData["USA"];
 var data;
-
-
-function initData(initialData){
-    var data = JSON.parse(JSON.stringify(initialData));
-
-    data.areWe = 'No';
-    data.healthCareLimit = Math.round(initialData.ventilators / ventilatorRate);
-    data.healthCareLimitCalculated = 0;
-    data.totals = [];
-    data.activeReal = [];
-    data.activeCalculated = [];
-    data.labels = [];
-    
-    
-    return data;
-}
-
-function getFiveDayGrowthRate(data){
-    var fiveDayGrowthRate = 0;
-    for (i = data.totalsInitial.length - daysForTrend; i < data.totalsInitial.length; i++) {
-        console.info(data.totalsInitial[i] + " " + data.totalsInitial[i - 1] + " " + (data.totalsInitial[i] / data.totalsInitial[i - 1]));
-        fiveDayGrowthRate += data.totalsInitial[i] / data.totalsInitial[i - 1];
-    }
-
-    return fiveDayGrowthRate / daysForTrend;
-    console.info("avg " + fiveDayGrowthRate);
-}
-
-
-function calculateTotals(currentTotal, fiveDayGrowthRate, maxPopulation, totalsInitial){
-    var totals = JSON.parse(JSON.stringify(totalsInitial));
-    while (currentTotal < maxPopulation && totals.length < 1000) {
-        var previousTotal = currentTotal;
-        var smoothGrowthRate = ((fiveDayGrowthRate - 1) / maxPopulation * currentTotal);
-        var growthRate = fiveDayGrowthRate - smoothGrowthRate;
-        if (growthRate < 1.001) {
-            growthRate = 1.001;
-        }
-        currentTotal = Math.round(previousTotal * growthRate);
-        totals.push(currentTotal);
-    }
-
-    return totals;
-}
-
-function calculateActive(totals){
-    var active = [];
-    for (i = 0; i < totals.length; i++) {
-        if (i+recoveryDays < totals.length-1) {
-            recoveries = totals[i];
-        }
-        active.push(totals[i] - recoveries);
-    }
-}
-
-
-function calculate(initialData, dateLimit) {
-    var data = initData(initialData);
-
-    var fiveDayGrowthRate = getFiveDayGrowthRate(data);
-
-    var currentTotal = data.totalsInitial[data.totalsInitial.length - 1];
-    var maxPopulation = data.population * totalInfectionEstimate;
-    
-
-    data.totals = calculateTotals(currentTotal, fiveDayGrowthRate, maxPopulation, data.totalsInitial);
-    currentTotal = data.totals[data.totals.length - 1];
-
-    
-
-
-    var recoveries = 0;
-    var currentDate = new Date(data.startDate);
-    var lengthIndex = -1;
-
-
-    for (i = 0; i < data.totals.length; i++) {
-        if (i > recoveryDays) {
-            recoveries = data.totals[i - recoveryDays];
-        }
-
-
-        if (i < data.totalsInitial.length) {
-            data.activeReal.push(data.totals[i] - recoveries);
-            data.activeCalculated.push(data.totals[i] - recoveries);
-
-        } else {
-            data.activeCalculated.push(data.totals[i] - recoveries);
-
-        }
-
-        if (!data.healthCareLimitDate &&
-            (data.activeCalculated[i] > data.healthCareLimit || data.activeReal[i] > data.healthCareLimit)) {
-            data.healthCareLimitDate = new Date(currentDate);
-            data.healthCareLimitIndex = i;
-            data.healthCareLimitCalculated = data.activeCalculated[i];
-            if (lengthIndex != -1) {
-                lengthIndex = i;
-                break;
-            }
-        }
-
-        if (currentDate > dateLimit && lengthIndex == -1) {
-            lengthIndex = i;
-        }
-
-        data.labels.push(currentDate.toLocaleDateString());
-
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-
-    for (i = recoveryDays; i > 0; i--) {
-        recoveries = data.totals[data.totals.length - i];
-
-        data.activeCalculated.push(currentTotal - recoveries);
-        data.labels.push(currentDate.toLocaleDateString());
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    for (i = recoveryDays; i > 0; i--) {
-        data.totals.push(currentTotal);
-    }
-
-    if (lengthIndex == -1) {
-        lengthIndex = data.totals.length;
-    }
-    cutToSize(data, lengthIndex + 1)
-
-    console.info(data);
-
-    return data;
-}
-
-
-
-function cutToSize(data, length) {
-    if (length < data.labels.length) {
-        data.labels = data.labels.slice(0, length);
-        data.activeReal = data.activeReal.slice(0, length);
-        data.activeCalculated = data.activeCalculated.slice(0, length);
-    }
-}
-
-
 
 
 function createChart(data) {
@@ -192,7 +38,7 @@ function createChart(data) {
             borderWidth: 1,
             pointRadius: 0
         }, {
-            label: "On "+data.labels[data.fixComparition],
+            label: "On " + data.labels[data.fixComparition],
             data: data.activeCalculated10daysAgo,
             backgroundColor:
                 'transparent',
@@ -270,12 +116,12 @@ function recalculateForDate(days) {
     data.activeCalculated5daysAgo = data5day.activeCalculated;
 
 
-    if(data.healthCareLimitDate > data5day.healthCareLimitDate){
+    if (data.healthCareLimitDate > data5day.healthCareLimitDate) {
         data.areWe = 'Yes';
-    }else{
+    } else {
         data.areWe = 'No';
     }
-    
+
     if (days > 1000) {
         var data10day = JSON.parse(JSON.stringify(initialData));
         data10day.totalsInitial = data5day.totalsInitial.slice(0, data.fixComparition);
