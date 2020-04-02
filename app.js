@@ -199,12 +199,13 @@ function animatedChart() {
             
             animation: {
                 easing: 'linear',
+                duration: 100,
                 onComplete: function () {
                     if(frame < dataFrames.length - 1){
                         frame++;
                         growthChart.data.datasets[0].label = labels [frame+10];
                         growthChart.data.datasets[0].data = dataFrames[frame];
-                        setTimeout("growthChart.update(700)", 5);
+                        setTimeout("growthChart.update(400)", 5);
                     }
                 }
             },
