@@ -161,7 +161,7 @@ function animatedChart() {
     //get frames
     var labels = [];
     var dataFrames = [];
-    for (var i = 10; i < initialData.totalsInitial.length; i++) {
+    for (var i = initialData.fixComparition; i <= initialData.totalsInitial.length; i++) {
         var dataShort = JSON.parse(JSON.stringify(initialData));
         dataShort.totalsInitial = dataShort.totalsInitial.slice(0, i);
         dataShort = calculate(dataShort);
@@ -184,7 +184,7 @@ function animatedChart() {
         data: {
             labels: labels,
             datasets: [{
-                label: labels [frame+10],
+                label: labels [frame+initialData.fixComparition],
                 data: dataFrames[frame],
                 backgroundColor:
                     'rgba(0, 0, 100, 0.4)',
@@ -198,14 +198,13 @@ function animatedChart() {
             maintainAspectRatio: false,
             
             animation: {
-                easing: 'linear',
                 duration: 100,
                 onComplete: function () {
                     if(frame < dataFrames.length - 1){
                         frame++;
-                        growthChart.data.datasets[0].label = labels [frame+10];
+                        growthChart.data.datasets[0].label = labels [frame+initialData.fixComparition];
                         growthChart.data.datasets[0].data = dataFrames[frame];
-                        setTimeout("growthChart.update(400)", 5);
+                        setTimeout("growthChart.update(600)", 5);
                     }
                 }
             },
