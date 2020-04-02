@@ -3,7 +3,7 @@ Chart.defaults.global.pointHitDetectionRadius = 1;
 
 var initialData = regionData["USA"];
 var data;
-
+var growthChart;
 
 function createChart(data) {
     var ctx = document.getElementById('growthChart');
@@ -64,7 +64,7 @@ function createChart(data) {
         });
     }
 
-    var growthChart = new Chart(ctx, {
+    growthChart = new Chart(ctx, {
         type: 'line',
         data: chartData,
         options: {
@@ -109,20 +109,20 @@ function createChart(data) {
 }
 
 var app;
+
+
+
 function recalculateForDate(days) {
 
     var dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + days);
     data = calculate(initialData, dateLimit);
 
-    var extendedDateLimit = new Date();
-    extendedDateLimit.setDate(extendedDateLimit.getDate() + 1000);
-
 
     var data5day = JSON.parse(JSON.stringify(initialData));
     data5day.totalsInitial = data5day.totalsInitial.slice(0, data5day.totalsInitial.length - 5);
     data5day.fatalitiesInitial = data5day.fatalitiesInitial.slice(0, data5day.fatalitiesInitial.length - 5);
-    data5day = calculate(data5day, extendedDateLimit);
+    data5day = calculate(data5day);
     cutToSize(data5day, data.activeCalculated.length);
     data.activeCalculated5daysAgo = data5day.activeCalculated;
 
@@ -137,53 +137,147 @@ function recalculateForDate(days) {
         var data10day = JSON.parse(JSON.stringify(initialData));
         data10day.totalsInitial = data5day.totalsInitial.slice(0, data.fixComparition);
         data10day.fatalitiesInitial = data5day.fatalitiesInitial.slice(0, data.fixComparition);
-        data10day = calculate(data10day, extendedDateLimit);
+        data10day = calculate(data10day);
         cutToSize(data10day, data.activeCalculated.length);
         data.activeCalculated10daysAgo = data10day.activeCalculated;
     }
 
     if (!app) {
-        app = new Vue({
-            el: '#mainApp',
-            data: {
-                bigPictureActive: true,
-                ventilatorRate: ventilatorRate,
-                totalInfectionEstimate: totalInfectionEstimate,
-                recoveryDays: recoveryDays,
-                fatalityRateOptimal: fatalityRateOptimal,
-                fatalityRateSuboptimal: fatalityRateSuboptimal,
-                activeRegion: 'USA',
-                daysForTrend: daysForTrend,
-                region: data
-
-            },
-            methods: {
-                bigPicture: function (event) {
-                    recalculateForDate(2000);
-                },
-                nearFuture: function (event) {
-                    recalculateForDate(10);
-                },
-                changeRegion: function (region) {
-                    initialData = regionData[region];
-                    app.$data.activeRegion = region;
-                    recalculateForDate(2000);
-                }
-            }
-        });
-
+        app = startVue(data);
     } else {
         app.$data.region = data;
 
     }
-    if (days > 1000) {
-        app.$data.bigPictureActive = true;
-    } else {
-        app.$data.bigPictureActive = false;
-    }
+
     document.getElementById('growthChart').remove();
     document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
     createChart(data);
+}
+
+
+
+
+function animatedChart() {
+    //get frames
+    var labels = [];
+    var dataFrames = [];
+    for (var i = 10; i < initialData.totalsInitial.length; i++) {
+        var dataShort = JSON.parse(JSON.stringify(initialData));
+        dataShort.totalsInitial = dataShort.totalsInitial.slice(0, i);
+        dataShort = calculate(dataShort);
+        dataFrames.push(dataShort.activeCalculated);
+        if (dataShort.labels.length > labels.length) {
+            labels = dataShort.labels;
+        }
+    }
+
+    console.info("Animation", labels, dataFrames);
+
+    //create chart 
+    document.getElementById('growthChart').remove();
+    document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
+    var ctx = document.getElementById('growthChart');
+    var frame = 0;
+   
+    growthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: labels [frame+10],
+                data: dataFrames[frame],
+                backgroundColor:
+                    'rgba(0, 0, 100, 0.4)',
+                borderColor:
+                    'rgba(0, 0, 100, 1)',
+                borderWidth: 1,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            
+            animation: {
+                easing: 'linear',
+                onComplete: function () {
+                    if(frame < dataFrames.length - 1){
+                        frame++;
+                        growthChart.data.datasets[0].label = labels [frame+10];
+                        growthChart.data.datasets[0].data = dataFrames[frame];
+                        setTimeout("growthChart.update(700)", 5);
+                    }
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        max: initialData.population * totalInfectionEstimate,
+                        callback: function (value, index, values) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }]
+            },
+            annotation: {
+                annotations: [{
+                    type: 'line',
+                    mode: 'horizontal',
+                    scaleID: 'y-axis-0',
+                    value: data.healthCareLimit,
+                    borderColor: 'tomato',
+                    borderDash: [2, 2],
+                    borderWidth: 2,
+                    label: {
+                        backgroundColor: "rgb(255,255,255,0.8)",
+                        fontColor: "black",
+                        content: "Health care system capacity",
+                        enabled: true,
+                        yAdjust: -11
+                    }
+                }]
+            }
+        }
+    });
+}
+
+
+function startVue(data) {
+    return new Vue({
+        el: '#mainApp',
+        data: {
+            activeChart: 'bigPicture',
+            ventilatorRate: ventilatorRate,
+            totalInfectionEstimate: totalInfectionEstimate,
+            recoveryDays: recoveryDays,
+            fatalityRateOptimal: fatalityRateOptimal,
+            fatalityRateSuboptimal: fatalityRateSuboptimal,
+            activeRegion: 'USA',
+            daysForTrend: daysForTrend,
+            region: data
+
+        },
+        methods: {
+            bigPicture: function (event) {
+                app.$data.activeChart = 'bigPicture';
+                recalculateForDate(2000);
+            },
+            nearFuture: function (event) {
+                app.$data.activeChart = 'nearFuture';
+                recalculateForDate(10);
+            },
+            animatedChart: function (event) {
+                app.$data.activeChart = 'animatedChart';
+                animatedChart();
+            },
+            changeRegion: function (region) {
+                app.$data.activeChart = 'bigPicture';
+                initialData = regionData[region];
+                app.$data.activeRegion = region;
+                recalculateForDate(2000);
+            }
+        }
+    });
 }
 
 var customTooltips = function (tooltip) {

@@ -66,10 +66,12 @@
        
 
         <div id="chartButtons">
-            <div class="chartButton " v-on:click="bigPicture" v-bind:class="{ chartButtonInactive: !bigPictureActive }">
+            <div class="chartButton " v-on:click="bigPicture" v-bind:class="{ chartButtonInactive: activeChart != 'bigPicture' }">
                 Complete picture</div>
-            <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: bigPictureActive }">
+            <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: activeChart != 'nearFuture' }">
                 Near future</div>
+            <div class="chartButton " v-on:click="animatedChart" v-bind:class="{ chartButtonInactive: activeChart != 'animatedChart' }">
+                    Animation</div>
             
         </div>
         <div id="chartParent" >
