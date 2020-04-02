@@ -198,13 +198,14 @@ function animatedChart() {
             maintainAspectRatio: false,
             
             animation: {
+                easing: 'linear',
                 duration: 100,
                 onComplete: function () {
                     if(frame < dataFrames.length - 1){
                         frame++;
                         growthChart.data.datasets[0].label = labels [frame+initialData.fixComparition];
                         growthChart.data.datasets[0].data = dataFrames[frame];
-                        setTimeout("growthChart.update(600)", 5);
+                        setTimeout("growthChart.update(600)", 1);
                     }
                 }
             },
