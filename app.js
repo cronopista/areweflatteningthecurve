@@ -196,7 +196,6 @@ function animatedChart() {
         },
         options: {
             maintainAspectRatio: false,
-            
             animation: {
                 easing: 'linear',
                 duration: 100,
