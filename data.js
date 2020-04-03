@@ -36,7 +36,8 @@ var regionData={
             143491,
             163844,
             188530,
-            215003
+            215003,
+            244877
         ],
         fatalitiesInitial: [
             6,
@@ -69,7 +70,8 @@ var regionData={
             2583,
             3156,
             4053,
-            5102
+            5102,
+            6070
     
         ]
     },
@@ -110,7 +112,8 @@ var regionData={
             80110,
             87956,
             95923,
-            104118
+            104118,
+            112065
         ],
         fatalitiesInitial: [
             0,
@@ -143,7 +146,8 @@ var regionData={
             6803,
             7716,
             8464,
-            9387
+            9387,
+            10348
     
         ]
     },
@@ -192,7 +196,8 @@ var regionData={
             97689,
             101739,
             105792,
-            110574
+            110574,
+            115242
         ],
         fatalitiesInitial: [
             3,
@@ -233,7 +238,8 @@ var regionData={
             10779,
             11591,
             12428,
-            13155
+            13155,
+            13915
     
         ]
     },
@@ -275,7 +281,8 @@ var regionData={
             62435,
             66885,
             71808,
-            77981
+            77981,
+            84794
         ],
         fatalitiesInitial: [
             0,
@@ -309,7 +316,8 @@ var regionData={
             541,
             645,
             775,
-            931
+            931,
+            1107
     
         ]
     },
@@ -350,7 +358,8 @@ var regionData={
             19522,
             22141,
             25150,
-            29474
+            29474,
+            33718
         ],
         fatalitiesInitial: [
             0,
@@ -383,7 +392,8 @@ var regionData={
             1228,
             1408,
             1789,
-            2352
+            2352,
+            2921
     
         ]
     },
@@ -424,7 +434,8 @@ var regionData={
             1024,
             1251,
             1397,
-            1998
+            1998,
+            2543
         ],
         fatalitiesInitial: [
             0,
@@ -457,7 +468,8 @@ var regionData={
             27,
             32,
             35,
-            58
+            58,
+            72
                 
         ]
     },
@@ -538,7 +550,6 @@ var regionData={
         ]
     },
     "New York":{
-    
         startDate: new Date(2020, 2, 2),
         ventilators: 12000,
         fixComparition: 14,

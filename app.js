@@ -205,7 +205,7 @@ function animatedChart() {
                         frame++;
                         growthChart.data.datasets[0].label = labels [frame+initialData.fixComparition];
                         growthChart.data.datasets[0].data = dataFrames[frame];
-                        setTimeout("growthChart.update(600)", 1);
+                        setTimeout("growthChart.update(300)", 1);
                     }
                 }
             },
