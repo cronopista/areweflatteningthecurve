@@ -603,7 +603,8 @@ var regionData={
             75813,
             83887,
             92381,
-            102863         
+            102863,
+            113706
         ],
         fatalitiesInitial: [
             0,
@@ -637,7 +638,8 @@ var regionData={
             1550,
             1940,
             2468,
-            2935
+            2935,
+            3565
     
         ]
     },
@@ -679,7 +681,8 @@ var regionData={
             7566,
             8794,
             9816,
-            11277
+            11277,
+            12573
         ],
         fatalitiesInitial: [
             0,
@@ -713,15 +716,16 @@ var regionData={
             155,
             188,
             212,
-            250
+            250,
+            282
     
         ]
     },
     "Minnesota":{
         startDate: new Date(2020, 2, 6),
-        ventilators: 1090,
+        ventilators: 2444+800,
         fixComparition: 12,
-        ventilatorsSituation:'<a href="https://www.fox9.com/news/minnesota-hospitals-increasing-capacity-ventilators" target="_blank">1,090</a>',
+        ventilatorsSituation:'<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
         population: 5000000,
         totalsInitial: [
             1,
@@ -752,8 +756,8 @@ var regionData={
             629,
             689,
             742,
-            789
-        ],
+            789,
+            865        ],
         fatalitiesInitial: [
             0,
             0,
@@ -783,7 +787,8 @@ var regionData={
             12,
             18,
             18,
-            22
+            22,
+            24
     
         ]
     }
