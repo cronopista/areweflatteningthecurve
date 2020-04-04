@@ -786,6 +786,57 @@ var regionData={
             22
     
         ]
+    },
+    "Brazil":{
+        startDate: new Date(2020, 2, 26),
+        ventilators: 65411,
+        fixComparition: 8,
+        ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'</a>",
+        population: 210000000,
+        totalsInitial: [
+            121,
+            200,
+            234,
+            291,
+            428,
+            621,
+            964,
+            1178,
+            1546,
+            1891,
+            2201,
+            2433,
+            2915,
+            3417,
+            3904,
+            4256,
+            4579,
+            5717,
+            6836,
+            7910,
+            9056
+        ],
+        fatalitiesInitial: [
+            0,
+            1,
+            4,
+            7,
+            11,
+            18,
+            25,
+            34,
+            46,
+            57,
+            77,
+            92,
+            114,
+            136,
+            159,
+            201,
+            240,
+            299,
+            359
+        ]
     }
 
 };
