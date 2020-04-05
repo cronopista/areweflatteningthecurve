@@ -810,7 +810,7 @@ var regionData={
         startDate: new Date(2020, 2, 26),
         ventilators: 65411,
         fixComparition: 8,
-        ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'</a>",
+        ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'>65,411</a>",
         population: 210000000,
         totalsInitial: [
             121,
