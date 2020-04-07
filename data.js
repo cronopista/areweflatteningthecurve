@@ -217,7 +217,8 @@ var regionData={
             115242,
             119827,
             124632,
-            128948
+            128948,
+            132547
         ],
         fatalitiesInitial: [
             3,
@@ -262,7 +263,8 @@ var regionData={
             13915,
             14681,
             15362,
-            15887
+            15887,
+            16523
     
         ]
     },
@@ -308,7 +310,8 @@ var regionData={
             84794,
             91159,
             96092,
-            100123
+            100123,
+            103375
         ],
         fatalitiesInitial: [
             0,
@@ -346,7 +349,8 @@ var regionData={
             1107,
             1275,
             1444,
-            1584
+            1584,
+            1810
     
         ]
     },
@@ -391,7 +395,8 @@ var regionData={
             33718,
             38168,
             41903,
-            47806
+            47806,
+            51608
         ],
         fatalitiesInitial: [
             0,
@@ -428,7 +433,8 @@ var regionData={
             2921,
             3605,
             4313,
-            4934
+            4934,
+            5373
     
         ]
     },
@@ -473,7 +479,8 @@ var regionData={
             2543,
             3059,
             3588,
-            4289
+            4289,
+            4778
         ],
         fatalitiesInitial: [
             0,
@@ -510,7 +517,8 @@ var regionData={
             72,
             86,
             99,
-            118
+            118,
+            136
                 
         ]
     },
@@ -838,7 +846,7 @@ var regionData={
         ]
     },
     "Brazil":{
-        startDate: new Date(2020, 2, 26),
+        startDate: new Date(2020, 2, 14),
         ventilators: 65411,
         fixComparition: 8,
         ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'>65,411</a>",
