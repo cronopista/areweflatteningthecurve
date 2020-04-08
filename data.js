@@ -577,7 +577,8 @@ var regionData={
             10524,
             11278,
             11730,
-            12442
+            12442,
+            13141
         ],
         fatalitiesInitial: [
             0,
@@ -616,7 +617,8 @@ var regionData={
             266,
             295,
             311,
-            345
+            345,
+            380
         ]
     },
     "New York":{
