@@ -105,7 +105,12 @@
             so the health care system might actually be overwhelmed much sooner.
         </p>
         <p>
-            <b>Projection of active cases</b>. We take the average increase of the last {{daysForTrend}} days and
+            <b>Projection of active cases</b>. This is what the future would look like if the contagion rate remained
+            constant as it is today. However, the contagion rate itself varies as the result of efforts made by goverments
+            and citizens and it has its own trend,
+            visible in the comparition with previous projections. </p>
+        <p>
+            To calculate the projection, we take the average increase of the last {{daysForTrend}} days and
             project it into the future until we reach the point
             where {{(totalInfectionEstimate*10000/100).toLocaleString()}}% of the population has been infected
             (estimates for total infection vary from <a
