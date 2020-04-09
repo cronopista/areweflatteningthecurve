@@ -42,7 +42,8 @@ var regionData={
             311357,
             336673,
             367004,
-            400335
+            400335,
+            434927
 
         ],
         fatalitiesInitial: [
@@ -82,7 +83,8 @@ var regionData={
             8452,
             9616,
             10871,
-            12841
+            12841,
+            14788
     
         ]
     },
@@ -129,7 +131,8 @@ var regionData={
             126168,
             131646,
             136675,
-            141942
+            141942,
+            148220
         ],
         fatalitiesInitial: [
             0,
@@ -168,7 +171,8 @@ var regionData={
             11947,
             12641,
             13341,
-            14045
+            14045,
+            14792
     
         ]
     },
@@ -223,7 +227,8 @@ var regionData={
             124632,
             128948,
             132547,
-            135586
+            135586,
+            139422
         ],
         fatalitiesInitial: [
             3,
@@ -270,7 +275,8 @@ var regionData={
             15362,
             15887,
             16523,
-            17127
+            17127,
+            17669
     
         ]
     },
@@ -318,7 +324,8 @@ var regionData={
             96092,
             100123,
             103375,
-            107663
+            107663,
+            113296
         ],
         fatalitiesInitial: [
             0,
@@ -358,7 +365,8 @@ var regionData={
             1444,
             1584,
             1810,
-            2016
+            2016,
+            2349
     
         ]
     },
@@ -405,7 +413,8 @@ var regionData={
             41903,
             47806,
             51608,
-            55242
+            55242,
+            60733
         ],
         fatalitiesInitial: [
             0,
@@ -444,14 +453,15 @@ var regionData={
             4313,
             4934,
             5373,
-            6159
+            6159,
+            7097
     
         ]
     },
     "India":{
         startDate: new Date(2020, 2, 2),
         ventilators: 8432,
-        fixComparition: 15,
+        fixComparition: 27,
         ventilatorsSituation: "<a href='https://www.thehindubusinessline.com/news/national/from-best-to-worst-scenario-india-will-need-thousands-of-ventilators-upgraded-health-infra-to-tackle-virus-icmr/article31156295.ece' target='_blank'>8,432</a>",
         population: 1330000000,
         totalsInitial: [
@@ -491,7 +501,8 @@ var regionData={
             3588,
             4289,
             4778,
-            5351
+            5351,
+            5916
         ],
         fatalitiesInitial: [
             0,
@@ -530,7 +541,8 @@ var regionData={
             99,
             118,
             136,
-            160
+            160,
+            178
                 
         ]
     },
