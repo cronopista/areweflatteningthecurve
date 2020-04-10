@@ -43,7 +43,8 @@ var regionData={
             336673,
             367004,
             400335,
-            434927
+            434927,
+            468566
 
         ],
         fatalitiesInitial: [
@@ -84,7 +85,8 @@ var regionData={
             9616,
             10871,
             12841,
-            14788
+            14788,
+            16691
     
         ]
     },
@@ -132,7 +134,8 @@ var regionData={
             131646,
             136675,
             141942,
-            148220
+            148220,
+            153222
         ],
         fatalitiesInitial: [
             0,
@@ -172,7 +175,8 @@ var regionData={
             12641,
             13341,
             14045,
-            14792
+            14792,
+            15447
     
         ]
     },
@@ -228,7 +232,8 @@ var regionData={
             128948,
             132547,
             135586,
-            139422
+            139422,
+            143626
         ],
         fatalitiesInitial: [
             3,
@@ -276,7 +281,8 @@ var regionData={
             15887,
             16523,
             17127,
-            17669
+            17669,
+            18279
     
         ]
     },
@@ -325,7 +331,8 @@ var regionData={
             100123,
             103375,
             107663,
-            113296
+            113296,
+            118235
         ],
         fatalitiesInitial: [
             0,
@@ -366,7 +373,8 @@ var regionData={
             1584,
             1810,
             2016,
-            2349
+            2349,
+            2607
     
         ]
     },
@@ -414,7 +422,8 @@ var regionData={
             47806,
             51608,
             55242,
-            60733
+            60733,
+            65077
         ],
         fatalitiesInitial: [
             0,
@@ -454,7 +463,8 @@ var regionData={
             4934,
             5373,
             6159,
-            7097
+            7097,
+            7978
     
         ]
     },
@@ -502,7 +512,8 @@ var regionData={
             4289,
             4778,
             5351,
-            5916
+            5916,
+            6725
         ],
         fatalitiesInitial: [
             0,
@@ -542,7 +553,8 @@ var regionData={
             118,
             136,
             160,
-            178
+            178,
+            227
                 
         ]
     },
@@ -590,7 +602,8 @@ var regionData={
             11278,
             11730,
             12442,
-            13141
+            13141,
+            13956
         ],
         fatalitiesInitial: [
             0,
@@ -630,7 +643,71 @@ var regionData={
             295,
             311,
             345,
-            380
+            380,
+            409
+        ]
+    },
+    "Brazil":{
+        startDate: new Date(2020, 2, 14),
+        ventilators: 65411,
+        fixComparition: 8,
+        ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'>65,411</a>",
+        population: 210000000,
+        totalsInitial: [
+            121,
+            200,
+            234,
+            291,
+            428,
+            621,
+            964,
+            1178,
+            1546,
+            1891,
+            2201,
+            2433,
+            2915,
+            3417,
+            3904,
+            4256,
+            4579,
+            5717,
+            6836,
+            7910,
+            9056,
+            10278,
+            11130,
+            12056,
+            13717,
+            16188,
+            18145
+        ],
+        fatalitiesInitial: [
+            0,
+            1,
+            4,
+            7,
+            11,
+            18,
+            25,
+            34,
+            46,
+            57,
+            77,
+            92,
+            114,
+            136,
+            159,
+            201,
+            240,
+            299,
+            359,
+            431,
+            486,
+            553,
+            667,
+            800,
+            954
         ]
     },
     "New York":{
@@ -889,67 +966,6 @@ var regionData={
             39,
             50
     
-        ]
-    },
-    "Brazil":{
-        startDate: new Date(2020, 2, 14),
-        ventilators: 65411,
-        fixComparition: 8,
-        ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'>65,411</a>",
-        population: 210000000,
-        totalsInitial: [
-            121,
-            200,
-            234,
-            291,
-            428,
-            621,
-            964,
-            1178,
-            1546,
-            1891,
-            2201,
-            2433,
-            2915,
-            3417,
-            3904,
-            4256,
-            4579,
-            5717,
-            6836,
-            7910,
-            9056,
-            10278,
-            11130,
-            12056,
-            13717,
-            15927
-        ],
-        fatalitiesInitial: [
-            0,
-            1,
-            4,
-            7,
-            11,
-            18,
-            25,
-            34,
-            46,
-            57,
-            77,
-            92,
-            114,
-            136,
-            159,
-            201,
-            240,
-            299,
-            359,
-            431,
-            486,
-            553,
-            667,
-            800
         ]
     }
 
