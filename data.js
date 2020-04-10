@@ -603,7 +603,8 @@ var regionData={
             11730,
             12442,
             13141,
-            13956
+            13956,
+            15472
         ],
         fatalitiesInitial: [
             0,
@@ -644,7 +645,8 @@ var regionData={
             311,
             345,
             380,
-            409
+            409,
+            435
         ]
     },
     "Brazil":{
