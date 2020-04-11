@@ -26,7 +26,6 @@ function createChart(data) {
             borderColor:
                 'rgba(0, 0, 100, 1)',
             borderWidth: 1,
-            borderDash: [4, 4],
             pointRadius: 5
         }, {
             label: '5 days ago',
