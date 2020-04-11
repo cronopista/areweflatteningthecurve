@@ -17,7 +17,7 @@ function createChart(data) {
             borderColor:
                 'rgba(0, 0, 100, 1)',
             borderWidth: 1,
-            pointRadius: 5
+            pointRadius: 1
         }, {
             label: 'Projection',
             data: data.activeCalculated,
@@ -26,7 +26,7 @@ function createChart(data) {
             borderColor:
                 'rgba(0, 0, 100, 1)',
             borderWidth: 1,
-            pointRadius: 5
+            pointRadius: 1
         }, {
             label: '5 days ago',
             data: data.activeCalculated5daysAgo,
