@@ -34,16 +34,25 @@ function createChart(data) {
             backgroundColor:
                 'transparent',
             borderColor:
-                'rgba(0, 0, 100, 0.5)',
+                'rgba(0, 0, 100, 0.8)',
             borderWidth: 1,
             pointRadius: 0
         }, {
-            label: "On " + data.labels[data.fixComparition],
+            label: "10 days ago",
             data: data.activeCalculated10daysAgo,
             backgroundColor:
                 'transparent',
             borderColor:
-                'rgba(0, 0, 100, 0.8)',
+                'rgba(0, 0, 100, 0.3)',
+            borderWidth: 1,
+            pointRadius: 0
+        }, {
+            label: "On " + data.labels[data.fixComparition],
+            data: data.activeCalculatedFixed,
+            backgroundColor:
+                'transparent',
+            borderColor:
+                'rgba(0, 0, 100, 0.3)',
             borderWidth: 1,
             borderDash: [4, 4],
             pointRadius: 0
@@ -135,11 +144,19 @@ function recalculateForDate(days) {
 
     if (days > 1000) {
         var data10day = JSON.parse(JSON.stringify(initialData));
-        data10day.totalsInitial = data5day.totalsInitial.slice(0, data.fixComparition);
-        data10day.fatalitiesInitial = data5day.fatalitiesInitial.slice(0, data.fixComparition);
+        data10day.totalsInitial = data10day.totalsInitial.slice(0, data5day.totalsInitial.length - 10);
+        data10day.fatalitiesInitial = data10day.fatalitiesInitial.slice(0, data5day.totalsInitial.length - 10);
         data10day = calculate(data10day);
         cutToSize(data10day, data.activeCalculated.length);
         data.activeCalculated10daysAgo = data10day.activeCalculated;
+
+
+        var dataFixed = JSON.parse(JSON.stringify(initialData));
+        dataFixed.totalsInitial = dataFixed.totalsInitial.slice(0, data.fixComparition);
+        dataFixed.fatalitiesInitial = dataFixed.fatalitiesInitial.slice(0, data.fixComparition);
+        dataFixed = calculate(dataFixed);
+        cutToSize(dataFixed, data.activeCalculated.length);
+        data.activeCalculatedFixed = dataFixed.activeCalculated;
     }
 
     if (!app) {
