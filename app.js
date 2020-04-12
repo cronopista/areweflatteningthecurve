@@ -309,7 +309,7 @@ $(document).ready(function () {
             var startDate = new Date(2020, 0, 22);
             for (var j = 0; j < timeseriesRegion.length; j++) {
                 if (timeseriesRegion[j].confirmed > 99 && region.startDate == null) {
-                    region.startDate = startDate;
+                    region.startDate = new Date(startDate);
                 } else {
                     startDate.setDate(startDate.getDate() + 1);
                 }
