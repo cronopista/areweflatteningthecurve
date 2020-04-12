@@ -1,10 +1,11 @@
 Chart.defaults.global.pointHitDetectionRadius = 1;
 
 var regions = ["US", "Italy", "Spain", "Germany", "United Kingdom", "India", "Portugal", "Brazil"];
-var initialData = regionData["US"];
-
+var app;
 
 function createChart(data) {
+    document.getElementById('growthChart').remove();
+    document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
     var ctx = document.getElementById('growthChart');
     var chartData = {
         labels: data.labels,
@@ -116,11 +117,10 @@ function createChart(data) {
     });
 }
 
-var app;
 
 
 
-function recalculateForDate(days) {
+function recalculateForDate(days, initialData) {
 
     var dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + days);
@@ -158,22 +158,17 @@ function recalculateForDate(days) {
         data.activeCalculatedFixed = dataFixed.activeCalculated;
     }
 
-    if (!app) {
-        app = startVue(data);
-    } else {
-        app.$data.region = data;
 
-    }
+    return data;    
 
-    document.getElementById('growthChart').remove();
-    document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
-    createChart(data);
 }
 
 
 
 
-function animatedChart() {
+
+
+function animatedChart(initialData) {
     //get frames
     var labels = [];
     var dataFrames = [];
@@ -270,30 +265,46 @@ function startVue(data) {
             fatalityRateSuboptimal: fatalityRateSuboptimal,
             activeRegion: 'US',
             daysForTrend: daysForTrend,
+            regionData: regionData,
             region: data
 
+        },
+        mounted() {
+            window.addEventListener(
+                'hashchange', function () {
+                    app.$data.activeChart = 'bigPicture';
+                    app.$data.activeRegion = getHash();
+                    var newData = recalculateForDate(2000, regionData[app.$data.activeRegion]);
+                    app.$data.region = newData;
+                    createChart(newData);
+                }
+            );
         },
         methods: {
             bigPicture: function (event) {
                 app.$data.activeChart = 'bigPicture';
-                recalculateForDate(2000);
+                createChart(recalculateForDate(2000,  regionData[app.$data.activeRegion]));
             },
             nearFuture: function (event) {
                 app.$data.activeChart = 'nearFuture';
-                recalculateForDate(10);
+                createChart(recalculateForDate(10,  regionData[app.$data.activeRegion]));
             },
             animatedChart: function (event) {
                 app.$data.activeChart = 'animatedChart';
-                animatedChart();
+                animatedChart( regionData[app.$data.activeRegion]);
             },
-            changeRegion: function (region) {
-                app.$data.activeChart = 'bigPicture';
-                initialData = regionData[region];
-                app.$data.activeRegion = region;
-                recalculateForDate(2000);
+            changeRegion: function () {
+                window.location.hash = app.$data.activeRegion;
             }
         }
     });
+}
+
+function getHash(){
+    if(!window.location.hash){
+        return "US";
+    }
+    return window.location.hash.substr(1).replace("%20", " ");
 }
 
 
@@ -306,27 +317,35 @@ $(document).ready(function () {
             region.startDate = null;
             region.fixComparition = -1;
             var timeseriesRegion = data[regions[i]];
-            var startDate = new Date(2020, 0, 22);
+            var currentDate = new Date(2020, 0, 22);
             for (var j = 0; j < timeseriesRegion.length; j++) {
                 if (timeseriesRegion[j].confirmed > 99 && region.startDate == null) {
-                    region.startDate = new Date(startDate);
-                } else {
-                    startDate.setDate(startDate.getDate() + 1);
+                    region.startDate = new Date(currentDate);
                 }
+
                 if (timeseriesRegion[j].confirmed > 900 && region.fixComparition == -1) {
                     region.fixComparition = region.totalsInitial.length;
                 }
                 if (region.startDate != null) {
                     region.totalsInitial.push(timeseriesRegion[j].confirmed);
                     region.fatalitiesInitial.push(timeseriesRegion[j].death);
+                    region.lastDate = currentDate.toLocaleDateString();
                 }
+
+                currentDate.setDate(currentDate.getDate() + 1);
+
             }
         }
-
-        recalculateForDate(2000);
+        
+        var hashRegion = getHash();
+        var calculatedData = recalculateForDate(2000, regionData[hashRegion]);
+        app = startVue(calculatedData);
+        createChart(calculatedData);
+        
 
     });
 
 
 
 });
+

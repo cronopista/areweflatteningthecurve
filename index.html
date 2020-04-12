@@ -18,96 +18,80 @@
 
 <body>
     <div class="title">
-       
+
         <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
-        the curve?</a></h1>
+                the curve?</a></h1>
     </div>
 
-   
+
     <div id="mainApp">
+        <div id="regionSelectSection">
+            <span class="selectText">Select a region:</span>
+            <select v-model="activeRegion" v-on:change="changeRegion" class="regionSelection">
+                <option v-for="(region, option) in regionData" v-bind:value="option">
+                    {{ option }}
+                </option>
+            </select>
 
-        <div id="regionButtons">
-            <div class="regionButton " v-on:click="changeRegion('US')"
-                v-bind:class="{ regionButtonInactive: activeRegion != 'US' }">US</div>
-            <div class="regionButton " v-on:click="changeRegion('Italy')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'Italy' }">Italy</div>
-            <div class="regionButton " v-on:click="changeRegion('Spain')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
-            <div class="regionButton " v-on:click="changeRegion('Germany')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'Germany' }">Germany</div>
-            <div class="regionButton " v-on:click="changeRegion('United Kingdom')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'United Kingdom' }">UK</div>
-            <div class="regionButton " v-on:click="changeRegion('India')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'India' }">India</div>
-            <div class="regionButton " v-on:click="changeRegion('Portugal')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'Portugal' }">Portugal</div>
-            <div class="regionButton " v-on:click="changeRegion('Brazil')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'Brazil' }">Brazil</div>
-            <div class="regionButton " v-on:click="changeRegion('New York')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'New York' }">New York</div>
-            <div class="regionButton " v-on:click="changeRegion('California')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'California' }">California</div>
-            <div class="regionButton " v-on:click="changeRegion('Minnesota')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'Minnesota' }">Minnesota</div>
         </div>
-       
-        <p>
-            <h2 class="weAre" v-bind:class="{ weAreNot:  region.areWe == 'No' }">{{region.areWe}}.</h2> 
-        </p>
-        <p v-if="region.areWe == 'Yes' ">
-            Our projection is better than it was 5 days ago, but further efforts need to be made. 
-            At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
-        </p>
-        <p v-if="region.areWe == 'No' ">
-            Our projection is worse than it was 5 days ago. Further efforts need to be made. 
-            At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
-        </p>
 
-        <p class="disclaimer">
-            <b>Disclaimer</b>: obviously  these dates and figures are ballpark estimates based on very imperfect data.
-        </p>
-    
-       
-
+        <h2 class="weAre" v-bind:class="{ weAreNot:  region.areWe == 'No' }">{{region.areWe}}.</h2>
+        <span v-if="region.areWe == 'Yes' ">
+            Our projection is better than it was 5 days ago, but further efforts need to be made.
+        </span>
+        <span v-if="region.areWe == 'No' ">
+            Our projection is worse than it was 5 days ago. Further efforts need to be made.
+        </span>
+        At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by
+        <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
         <div id="chartButtons">
-            <div class="chartButton " v-on:click="bigPicture" v-bind:class="{ chartButtonInactive: activeChart != 'bigPicture' }">
+            <div class="chartButton " v-on:click="bigPicture"
+                v-bind:class="{ chartButtonInactive: activeChart != 'bigPicture' }">
                 Complete picture</div>
-            <div class="chartButton " v-on:click="nearFuture" v-bind:class="{ chartButtonInactive: activeChart != 'nearFuture' }">
+            <div class="chartButton " v-on:click="nearFuture"
+                v-bind:class="{ chartButtonInactive: activeChart != 'nearFuture' }">
                 Near future</div>
-            <div class="chartButton " v-on:click="animatedChart" v-bind:class="{ chartButtonInactive: activeChart != 'animatedChart' }">
-                    Animation</div>
-            
-        </div>
-        <div id="chartParent" >
+            <div class="chartButton " v-on:click="animatedChart"
+                v-bind:class="{ chartButtonInactive: activeChart != 'animatedChart' }">
+                Animation</div>
 
-            <canvas id="growthChart" ></canvas>
+        </div>
+        <div id="chartParent">
+
+            <canvas id="growthChart"></canvas>
         </div>
 
         <p class="note">
             Trends change daily based on the efforts made by governments
-            and citizens. You can see the evolution of the trend by comparing the current projection with the projection 
-            from 5 days ago, 10 days ago, and the one from {{region.labels[region.fixComparition]}}, when there were {{region.totals[region.fixComparition].toLocaleString()}}
-            active cases.<br/>
-            Data updated twice daily.
+            and citizens. You can see the evolution of the trend by comparing the current projection with the projection
+            from 5 days ago, 10 days ago, and the one from {{region.labels[region.fixComparition]}}, when there were
+            {{region.totals[region.fixComparition].toLocaleString()}}
+            active cases.
         </p>
-        
-      
-        
+        <p v-if="region.lastDate" class="disclaimer">
+            Data updated <a href="https://github.com/pomber/covid19" target="_blank"></a>3 times daily</a> from the
+            Johns Hopkins CSSE repository.
+            Last day measured: {{region.lastDate}} .
+        </p>
+
+
+
         <h2 id="methodology">Methodology</h2>
         <p>
             <b>Health care system capacity</b>. It is estimated that <a
                 href="https://www.nytimes.com/2020/03/22/opinion/health/ventilator-shortage-coronavirus-solution.html"
                 target="_blank">{{(ventilatorRate*10000/100).toLocaleString()}}% of cases require ventilators</a>.
-            We are defining the capacity of the health care system by the number of available ventilators. 
-            We currently have <b v-html="region.ventilatorsSituation"></b>. When we reach 
-            <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we will need 
+            We are defining the capacity of the health care system by the number of available ventilators.
+            We currently have <b v-html="region.ventilatorsSituation"></b>. When we reach
+            <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we will need
             <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>.
             It may be noted that a big percentage of ventilators are normally in use for other types of patients,
             so the health care system might actually be overwhelmed much sooner.
         </p>
         <p>
             <b>Projection of active cases</b>. This is what the future would look like if the contagion rate remained
-            constant as it is today. However, the contagion rate itself varies as the result of efforts made by governments
+            constant as it is today. However, the contagion rate itself varies as the result of efforts made by
+            governments
             and citizens and it has its own trend,
             visible in the comparison with previous projections. </p>
         <p>
@@ -124,10 +108,14 @@
                 target="_blank">{{recoveryDays}} days</a> old (average recovery time).
         </p>
         <p>
-            <b>Long term trend</b>. In the <i>near future</i> view you can see the long term trend curve. This is based on the variation 
-            of daily increases instead of the variation in the total number of cases. As a result, this curve is an early 
-            indicator of future trends, but it's also less reliable and subject to sudden changes. To make it a litttle bit more stable,
-            we compare the average daily increase of the last 5 days with the average daily increase of the 5 days before those.
+            <b>Long term trend</b>. In the <i>near future</i> view you can see the long term trend curve. This is based
+            on the variation
+            of daily increases instead of the variation in the total number of cases. As a result, this curve is an
+            early
+            indicator of future trends, but it's also less reliable and subject to sudden changes. To make it a litttle
+            bit more stable,
+            we compare the average daily increase of the last 5 days with the average daily increase of the 5 days
+            before those.
         </p>
         <p>
             <b>Fatalities</b>. This is even more guesswork than the rest,

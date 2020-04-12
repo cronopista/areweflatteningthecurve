@@ -5,23 +5,6 @@ body{
     margin-bottom: 60px;
 }
 
-#chartjs-tooltip {
-    opacity: 1;
-    position: absolute;
-    background: rgba(0, 0, 0, .7);
-    color: white;
-    border-radius: 3px;
-    -webkit-transition: all .1s ease;
-    transition: all .1s ease;
-    pointer-events: none;
-    -webkit-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
-}
-
-#chartjs-tooltip table {
-    color: white;
-}
-
 #mainApp {
     width: 1000px;
     margin: auto
@@ -37,7 +20,7 @@ body{
 
 #chartButtons {
     border-bottom: 1px solid #555;
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap ;
@@ -62,33 +45,25 @@ body{
 }
 
 
-#regionButtons {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-wrap: wrap ;
+#regionSelectSection{
+    padding-top: 10px;
 }
 
-.regionButton {
-    height: 20px;
-    line-height: 20px;
-    padding: 10px;
-    padding-left: 0px;
-    padding-right: 20px;
-    font-size: 18px;
-    border-bottom: 4px solid transparent;
-}
-
-.regionButtonInactive {
+.selectText{
+    font-size: 25px;
     color: #999;
-    cursor: pointer;
+    margin-right: 20px;
 }
 
-.regionButtonInactive:hover {
-    border-bottom: 4px solid rgba(255, 166, 0, 0.411);
+.regionSelection{
+    height: 50px;
+    font-size: 28px;
+    border: 1px solid #efefef;
+    color: #999;
+    font-weight: bold;
+    background-color: white;
+    margin-top: 10px;
 }
-
-
 
 .weAre{
     color: green;
