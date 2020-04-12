@@ -10,6 +10,7 @@
     <script src="lib/vue.js"></script>
     <script src="lib/Chart.js"></script>
     <script src="lib/chartjs-plugin-annotation.js"></script>
+    <script src="lib/jquery-3.5.0.min.js"></script>
     <link href="styles.css" rel="stylesheet" media="screen" />
 
 
@@ -26,16 +27,16 @@
     <div id="mainApp">
 
         <div id="regionButtons">
-            <div class="regionButton " v-on:click="changeRegion('USA')"
-                v-bind:class="{ regionButtonInactive: activeRegion != 'USA' }">USA</div>
+            <div class="regionButton " v-on:click="changeRegion('US')"
+                v-bind:class="{ regionButtonInactive: activeRegion != 'US' }">US</div>
             <div class="regionButton " v-on:click="changeRegion('Italy')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Italy' }">Italy</div>
             <div class="regionButton " v-on:click="changeRegion('Spain')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Spain' }">Spain</div>
             <div class="regionButton " v-on:click="changeRegion('Germany')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'Germany' }">Germany</div>
-            <div class="regionButton " v-on:click="changeRegion('UK')"
-                v-bind:class="{ regionButtonInactive:  activeRegion != 'UK' }">UK</div>
+            <div class="regionButton " v-on:click="changeRegion('United Kingdom')"
+                v-bind:class="{ regionButtonInactive:  activeRegion != 'United Kingdom' }">UK</div>
             <div class="regionButton " v-on:click="changeRegion('India')"
                 v-bind:class="{ regionButtonInactive:  activeRegion != 'India' }">India</div>
             <div class="regionButton " v-on:click="changeRegion('Portugal')"

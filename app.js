@@ -1,9 +1,8 @@
 Chart.defaults.global.pointHitDetectionRadius = 1;
 
+var regions = ["US", "Italy", "Spain", "Germany", "United Kingdom", "India", "Portugal", "Brazil"];
+var initialData = regionData["US"];
 
-var initialData = regionData["USA"];
-var data;
-var growthChart;
 
 function createChart(data) {
     var ctx = document.getElementById('growthChart');
@@ -72,12 +71,19 @@ function createChart(data) {
         });
     }
 
-    growthChart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'line',
         data: chartData,
         options: {
             maintainAspectRatio: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
 
+                        return "Active: " + tooltipItem.yLabel.toLocaleString();
+                    }
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
@@ -87,12 +93,6 @@ function createChart(data) {
                         }
                     }
                 }]
-            },
-            tooltips: {
-                enabled: false,
-                mode: 'index',
-                position: 'nearest',
-                custom: customTooltips
             },
             annotation: {
                 annotations: [{
@@ -124,7 +124,7 @@ function recalculateForDate(days) {
 
     var dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + days);
-    data = calculate(initialData, dateLimit);
+    var data = calculate(initialData, dateLimit);
 
 
     var data5day = JSON.parse(JSON.stringify(initialData));
@@ -194,13 +194,13 @@ function animatedChart() {
     document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
     var ctx = document.getElementById('growthChart');
     var frame = 0;
-   
+
     growthChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: labels [frame+initialData.fixComparition],
+                label: labels[frame + initialData.fixComparition],
                 data: dataFrames[frame],
                 backgroundColor:
                     'rgba(0, 0, 100, 0.4)',
@@ -216,9 +216,9 @@ function animatedChart() {
                 easing: 'linear',
                 duration: 100,
                 onComplete: function () {
-                    if(frame < dataFrames.length - 1){
+                    if (frame < dataFrames.length - 1) {
                         frame++;
-                        growthChart.data.datasets[0].label = labels [frame+initialData.fixComparition];
+                        growthChart.data.datasets[0].label = labels[frame + initialData.fixComparition];
                         growthChart.data.datasets[0].data = dataFrames[frame];
                         setTimeout("growthChart.update(150)", 1);
                     }
@@ -240,7 +240,7 @@ function animatedChart() {
                     type: 'line',
                     mode: 'horizontal',
                     scaleID: 'y-axis-0',
-                    value: data.healthCareLimit,
+                    value: initialData.healthCareLimit,
                     borderColor: 'tomato',
                     borderDash: [2, 2],
                     borderWidth: 2,
@@ -268,7 +268,7 @@ function startVue(data) {
             recoveryDays: recoveryDays,
             fatalityRateOptimal: fatalityRateOptimal,
             fatalityRateSuboptimal: fatalityRateSuboptimal,
-            activeRegion: 'USA',
+            activeRegion: 'US',
             daysForTrend: daysForTrend,
             region: data
 
@@ -296,88 +296,37 @@ function startVue(data) {
     });
 }
 
-var customTooltips = function (tooltip) {
 
-    // Tooltip Element
-    var tooltipEl = document.getElementById('chartjs-tooltip');
-
-    if (!tooltipEl) {
-        tooltipEl = document.createElement('div');
-        tooltipEl.id = 'chartjs-tooltip';
-        tooltipEl.innerHTML = '<table></table>';
-        this._chart.canvas.parentNode.appendChild(tooltipEl);
-    }
-
-    // Hide if no tooltip
-    if (tooltip.opacity === 0) {
-        tooltipEl.style.opacity = 0;
-        return;
-    }
-
-    // Set caret Position
-    tooltipEl.classList.remove('above', 'below', 'no-transform');
-    if (tooltip.yAlign) {
-        tooltipEl.classList.add(tooltip.yAlign);
-    } else {
-        tooltipEl.classList.add('no-transform');
-    }
-
-    function getBody(bodyItem) {
-        return bodyItem.lines;
-    }
-
-
-    if (!tooltip.dataPoints) {
-        return;
-    }
-    var index = tooltip.dataPoints[0].index;
-
-
-    // Set Text
-    if (tooltip.body) {
-        var titleLines = tooltip.title || [];
-        var bodyLines = tooltip.body.map(getBody);
-
-        var innerHtml = '<thead>';
-
-        titleLines.forEach(function (title) {
-            innerHtml += '<tr><th>' + title + '</th></tr>';
-        });
-        innerHtml += '</thead><tbody>';
-
-        var death = 0;
-        if (index < data.fatalitiesInitial.length) {
-            death = data.fatalitiesInitial[index];
-        } else {
-            var total = data.totals[index];
-            if (total > data.healthCareLimit) {
-                death = Math.round((total - data.healthCareLimit) * fatalityRateSuboptimal + data.healthCareLimit * fatalityRateOptimal);
-            } else {
-                death = Math.round(total * fatalityRateOptimal);
+$(document).ready(function () {
+    $.getJSON("https://pomber.github.io/covid19/timeseries.json", function (data) {
+        for (var i = 0; i < regions.length; i++) {
+            var region = regionData[regions[i]];
+            region.totalsInitial = [];
+            region.fatalitiesInitial = [];
+            region.startDate = null;
+            region.fixComparition = -1;
+            var timeseriesRegion = data[regions[i]];
+            var startDate = new Date(2020, 0, 22);
+            for (var j = 0; j < timeseriesRegion.length; j++) {
+                if (timeseriesRegion[j].confirmed > 99 && region.startDate == null) {
+                    region.startDate = startDate;
+                } else {
+                    startDate.setDate(startDate.getDate() + 1);
+                }
+                if (timeseriesRegion[j].confirmed > 900 && region.fixComparition == -1) {
+                    region.fixComparition = region.totalsInitial.length;
+                }
+                if (region.startDate != null) {
+                    region.totalsInitial.push(timeseriesRegion[j].confirmed);
+                    region.fatalitiesInitial.push(timeseriesRegion[j].death);
+                }
             }
         }
 
-        innerHtml += '<tr><td>Active cases: ' + data.activeCalculated[index].toLocaleString() + '</td></tr>';
-        innerHtml += '<tr><td>Total cases: ' + data.totals[index].toLocaleString() + '</td></tr>';
-        innerHtml += '<tr><td>Fatalities: ' + death.toLocaleString() + '</td></tr>';
-        innerHtml += '</tbody>';
+        recalculateForDate(2000);
 
-        var tableRoot = tooltipEl.querySelector('table');
-        tableRoot.innerHTML = innerHtml;
-    }
+    });
 
-    var positionY = this._chart.canvas.offsetTop;
-    var positionX = this._chart.canvas.offsetLeft;
 
-    // Display, position, and set styles for font
-    tooltipEl.style.opacity = 1;
-    tooltipEl.style.left = positionX + tooltip.caretX + 'px';
-    tooltipEl.style.top = positionY + tooltip.caretY + 'px';
-    tooltipEl.style.fontFamily = tooltip._bodyFontFamily;
-    tooltipEl.style.fontSize = tooltip.bodyFontSize + 'px';
-    tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
-    tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
-};
 
-recalculateForDate(2000);
-
+});
