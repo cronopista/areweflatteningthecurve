@@ -51,7 +51,11 @@ var regionData = {
         ventilatorsSituation: "<a href='https://youtu.be/Bb4mOb_YsCs?t=1225' target='_blank'>1142×2</a>",
         population: 10276617
     },
-
+    "Russia": {
+        ventilators: 40000,
+        ventilatorsSituation: "<a href='https://meduza.io/en/feature/2020/03/21/the-ventilator-problem' target='_blank'>40,000</a>",
+        population: 144500000
+    },
     "Spain": {
         ventilators: 12000,
         ventilatorsSituation: "<a href='https://www.elespanol.com/ciencia/salud/20200325/escandalo-respiradores-espana-distribuirlos-no-sabe/477202839_0.html' target='_blank'>12,000 (pure guesswork as the real number is currently unknown)</a>",
@@ -82,22 +86,27 @@ var regionData = {
         ventilatorsSituation: '<a href="https://www.nytimes.com/2020/03/12/upshot/coronavirus-biggest-worry-hospital-capacity.html" target="_blank">170,000</a>',
         population: 327200000
     },
-
     "New York": {
         ventilators: 12000,
-        fixComparition: 14,
+        fixComparition: 12,
         ventilatorsSituation: '<a href="https://www.nytimes.com/2020/03/17/nyregion/ny-coronavirus-ventilators.html" target="_blank">12,000</a>',
         population: 20000000
     },
+    "New Jersey":{
+        ventilators: 4500,
+        fixComparition: 16,
+        ventilatorsSituation: '<a href="https://www.politico.com/states/new-jersey/story/2020/03/26/new-jersey-officials-planning-for-possibility-of-rationing-ventilators-1269246" target="_blank">4,500</a>',
+        population: 8800000
+    },
     "California": {
         ventilators: 15000,
-        fixComparition: 17,
+        fixComparition: 15,
         ventilatorsSituation: '15,000 (<a href="https://www.nytimes.com/2020/03/23/us/california-coronavirus-testing-masks.html" target="_blank">guesswork, as the data seems currently unavailable</a>)',
         population: 40000000
     },
     "Minnesota": {
         ventilators: 2444 + 800,
-        fixComparition: 12,
+        fixComparition: 18,
         ventilatorsSituation: '<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
         population: 5000000
     }
