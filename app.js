@@ -2,6 +2,9 @@ Chart.defaults.global.pointHitDetectionRadius = 1;
 
 var app;
 
+
+
+
 function createChart(data) {
     document.getElementById('growthChart').remove();
     document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
@@ -9,7 +12,7 @@ function createChart(data) {
     var chartData = {
         labels: data.labels,
         datasets: [{
-            label: 'Real active cases',
+            label: 'Real cases',
             data: data.activeReal,
             backgroundColor:
                 'rgba(0, 0, 100, 0.4)',
@@ -18,7 +21,7 @@ function createChart(data) {
             borderWidth: 2,
             pointRadius: 0
         }, {
-            label: 'Projection',
+            label: 'Current projection',
             data: data.activeCalculated,
             backgroundColor:
                 'rgba(0, 0, 100, 0.1)',
@@ -212,7 +215,7 @@ function getHash() {
 }
 
 
-function loadCountryData(data){
+function loadCountryData(data) {
     for (var countryName in regionData) {
         var region = regionData[countryName];
         if (data[countryName]) {
@@ -241,15 +244,71 @@ function loadCountryData(data){
     }
 }
 
+function intDateToDate(intDate) {
+    var strDate = intDate + "";
+    var year = strDate.substr(0, 4);
+    var month = strDate.substr(4, 2);
+    var day = strDate.substr(6, 2);
+
+    return new Date(parseInt(year), parseInt(month, 10) - 1, parseInt(day));
+
+}
+
+function loadStateData(data) {
+    for (var i = data.length - 1; i >= 0; i--) {
+        var region = regionData[stateCodes[data[i].state]];
+        if (region) {
+            if (!region.totalsInitial) {
+                region.totalsInitial = [];
+                region.startDate = intDateToDate(data[i].date);
+            }
+            region.totalsInitial.push(data[i].positive);
+            region.lastDate = intDateToDate(data[i].date).toLocaleDateString();
+        }
+
+    }
+
+
+    for (var countryName in regionData) {
+        var region = regionData[countryName];
+        if (data[countryName]) {
+            region.totalsInitial = [];
+            region.startDate = null;
+            region.fixComparition = -1;
+            var timeseriesRegion = data[countryName];
+            var currentDate = new Date(2020, 0, 22);
+            for (var j = 0; j < timeseriesRegion.length; j++) {
+                if (timeseriesRegion[j].confirmed > 99 && region.startDate == null) {
+                    region.startDate = new Date(currentDate);
+                }
+
+                if (timeseriesRegion[j].confirmed > 900 && region.fixComparition == -1) {
+                    region.fixComparition = region.totalsInitial.length;
+                }
+                if (region.startDate != null) {
+                    region.totalsInitial.push(timeseriesRegion[j].confirmed);
+                    region.lastDate = currentDate.toLocaleDateString();
+                }
+
+                currentDate.setDate(currentDate.getDate() + 1);
+
+            }
+        }
+    }
+}
 
 $(document).ready(function () {
     $.getJSON("https://pomber.github.io/covid19/timeseries.json", function (data) {
         loadCountryData(data);
+        $.getJSON("https://covidtracking.com/api/v1/states/daily.json", function (data) {
+            loadStateData(data);
+            var hashRegion = getHash();
+            var calculatedData = recalculateForDate(2000, regionData[hashRegion]);
+            app = startVue(calculatedData);
+            createChart(calculatedData);
+        });
 
-        var hashRegion = getHash();
-        var calculatedData = recalculateForDate(2000, regionData[hashRegion]);
-        app = startVue(calculatedData);
-        createChart(calculatedData);
+
 
 
     });
