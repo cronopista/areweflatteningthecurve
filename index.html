@@ -46,7 +46,7 @@
         <span v-if="region.areWe == 'No' ">
             Our projection is worse than it was 5 days ago.
         </span>
-        At the current contagion rate, we <a href="#methodology">could overwhelm the health care system</a> by
+        At the current contagion rate, we could overwhelm the health care system by
         <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
         <div id="chartButtons">
             <div class="chartButton " v-on:click="bigPicture"
