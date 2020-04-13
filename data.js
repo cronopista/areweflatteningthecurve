@@ -15,6 +15,11 @@ var regionData={
         ventilatorsSituation: "<a href='https://www.reuters.com/article/us-health-coronavirus-ventilators-insigh/army-joins-the-production-line-as-ventilator-makers-scramble-to-meet-demand-idUSKBN2180JU' target='_blank'>12,000 (guesswork as the real number is hard to find)</a>",
         population: 60500000
     },
+    "France":{
+        ventilators: 14000,
+        ventilatorsSituation: "<a href='https://www.ft.com/content/42f636be-751d-4ebf-9b55-bf313014769f' target='_blank'>14,000</a>",
+        population: 66990000
+    },
     "Germany":{
         ventilators: 25000,
         ventilatorsSituation: "<a href='https://www.nytimes.com/2020/03/17/opinion/coronavirus-europe-germany.html' target='_blank'>25,000</a>",
@@ -24,6 +29,21 @@ var regionData={
         ventilators: 8000,
         ventilatorsSituation:'<a href="https://www.theguardian.com/world/2020/mar/30/uk-government-orders-more-ventilators-for-coronavirus-crisis" target="_blank">8,000</a>',
         population: 66440000
+    },
+    "Iran":{
+        ventilators: 7200,
+        ventilatorsSituation:'<a href="https://www.foreignaffairs.com/articles/iran/2020-04-02/sanctions-make-coronavirus-more-deadly" target="_blank">7,200</a>',
+        population: 81100000
+    },
+    "Turkey":{
+        ventilators: 17000,
+        ventilatorsSituation:'<a href="https://healthmanagement.org/c/icu/issuearticle/state-of-intensive-care-in-turkey" target="_blank">17,000 (ballpark estimation)</a>',
+        population: 82000000
+    },
+    "Belgium":{
+        ventilators: 5000,
+        ventilatorsSituation:'5,000 (ballpark estimation, could not find figures)',
+        population: 11460000
     },
     "India":{
         ventilators: 8432,
