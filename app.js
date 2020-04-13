@@ -15,8 +15,8 @@ function createChart(data) {
                 'rgba(0, 0, 100, 0.4)',
             borderColor:
                 'rgba(0, 0, 100, 1)',
-            borderWidth: 1,
-            pointRadius: 1
+            borderWidth: 2,
+            pointRadius: 0
         }, {
             label: 'Projection',
             data: data.activeCalculated,
@@ -24,8 +24,8 @@ function createChart(data) {
                 'rgba(0, 0, 100, 0.1)',
             borderColor:
                 'rgba(0, 0, 100, 1)',
-            borderWidth: 1,
-            pointRadius: 1
+            borderWidth: 2,
+            pointRadius: 0
         }, {
             label: '5 days ago',
             data: data.activeCalculated5daysAgo,
@@ -163,92 +163,6 @@ function recalculateForDate(days, initialData) {
 
 
 
-
-function animatedChart(initialData) {
-    //get frames
-    var labels = [];
-    var dataFrames = [];
-    for (var i = initialData.fixComparition; i <= initialData.totalsInitial.length; i++) {
-        var dataShort = JSON.parse(JSON.stringify(initialData));
-        dataShort.totalsInitial = dataShort.totalsInitial.slice(0, i);
-        dataShort = calculate(dataShort);
-        dataFrames.push(dataShort.activeCalculated);
-        if (dataShort.labels.length > labels.length) {
-            labels = dataShort.labels;
-        }
-    }
-
-    console.info("Animation", labels, dataFrames);
-
-    //create chart 
-    document.getElementById('growthChart').remove();
-    document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
-    var ctx = document.getElementById('growthChart');
-    var frame = 0;
-
-    growthChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: labels[frame + initialData.fixComparition],
-                data: dataFrames[frame],
-                backgroundColor:
-                    'rgba(0, 0, 100, 0.4)',
-                borderColor:
-                    'rgba(0, 0, 100, 1)',
-                borderWidth: 1,
-                pointRadius: 0
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            animation: {
-                easing: 'linear',
-                duration: 100,
-                onComplete: function () {
-                    if (frame < dataFrames.length - 1) {
-                        frame++;
-                        growthChart.data.datasets[0].label = labels[frame + initialData.fixComparition];
-                        growthChart.data.datasets[0].data = dataFrames[frame];
-                        setTimeout("growthChart.update(150)", 1);
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        max: initialData.population * totalInfectionEstimate,
-                        callback: function (value, index, values) {
-                            return value.toLocaleString();
-                        }
-                    }
-                }]
-            },
-            annotation: {
-                annotations: [{
-                    type: 'line',
-                    mode: 'horizontal',
-                    scaleID: 'y-axis-0',
-                    value: initialData.healthCareLimit,
-                    borderColor: 'tomato',
-                    borderDash: [2, 2],
-                    borderWidth: 2,
-                    label: {
-                        backgroundColor: "rgb(255,255,255,0.8)",
-                        fontColor: "black",
-                        content: "Health care system capacity",
-                        enabled: true,
-                        yAdjust: -11
-                    }
-                }]
-            }
-        }
-    });
-}
-
-
 function startVue(data) {
     return new Vue({
         el: '#mainApp',
@@ -283,10 +197,6 @@ function startVue(data) {
                 app.$data.activeChart = 'nearFuture';
                 createChart(recalculateForDate(10, regionData[app.$data.activeRegion]));
             },
-            animatedChart: function (event) {
-                app.$data.activeChart = 'animatedChart';
-                animatedChart(regionData[app.$data.activeRegion]);
-            },
             changeRegion: function () {
                 window.location.hash = app.$data.activeRegion;
             }
@@ -302,34 +212,39 @@ function getHash() {
 }
 
 
-$(document).ready(function () {
-    $.getJSON("https://pomber.github.io/covid19/timeseries.json", function (data) {
-        for (var countryName in regionData) {
-            var region = regionData[countryName];
-            if (data[countryName]) {
-                region.totalsInitial = [];
-                region.startDate = null;
-                region.fixComparition = -1;
-                var timeseriesRegion = data[countryName];
-                var currentDate = new Date(2020, 0, 22);
-                for (var j = 0; j < timeseriesRegion.length; j++) {
-                    if (timeseriesRegion[j].confirmed > 99 && region.startDate == null) {
-                        region.startDate = new Date(currentDate);
-                    }
-
-                    if (timeseriesRegion[j].confirmed > 900 && region.fixComparition == -1) {
-                        region.fixComparition = region.totalsInitial.length;
-                    }
-                    if (region.startDate != null) {
-                        region.totalsInitial.push(timeseriesRegion[j].confirmed);
-                        region.lastDate = currentDate.toLocaleDateString();
-                    }
-
-                    currentDate.setDate(currentDate.getDate() + 1);
-
+function loadCountryData(data){
+    for (var countryName in regionData) {
+        var region = regionData[countryName];
+        if (data[countryName]) {
+            region.totalsInitial = [];
+            region.startDate = null;
+            region.fixComparition = -1;
+            var timeseriesRegion = data[countryName];
+            var currentDate = new Date(2020, 0, 22);
+            for (var j = 0; j < timeseriesRegion.length; j++) {
+                if (timeseriesRegion[j].confirmed > 99 && region.startDate == null) {
+                    region.startDate = new Date(currentDate);
                 }
+
+                if (timeseriesRegion[j].confirmed > 900 && region.fixComparition == -1) {
+                    region.fixComparition = region.totalsInitial.length;
+                }
+                if (region.startDate != null) {
+                    region.totalsInitial.push(timeseriesRegion[j].confirmed);
+                    region.lastDate = currentDate.toLocaleDateString();
+                }
+
+                currentDate.setDate(currentDate.getDate() + 1);
+
             }
         }
+    }
+}
+
+
+$(document).ready(function () {
+    $.getJSON("https://pomber.github.io/covid19/timeseries.json", function (data) {
+        loadCountryData(data);
 
         var hashRegion = getHash();
         var calculatedData = recalculateForDate(2000, regionData[hashRegion]);
