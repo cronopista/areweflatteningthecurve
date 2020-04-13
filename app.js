@@ -128,7 +128,6 @@ function recalculateForDate(days, initialData) {
 
     var data5day = JSON.parse(JSON.stringify(initialData));
     data5day.totalsInitial = data5day.totalsInitial.slice(0, data5day.totalsInitial.length - 5);
-    data5day.fatalitiesInitial = data5day.fatalitiesInitial.slice(0, data5day.fatalitiesInitial.length - 5);
     data5day = calculate(data5day);
     cutToSize(data5day, data.activeCalculated.length);
     data.activeCalculated5daysAgo = data5day.activeCalculated;
@@ -143,7 +142,6 @@ function recalculateForDate(days, initialData) {
     if (days > 1000) {
         var data10day = JSON.parse(JSON.stringify(initialData));
         data10day.totalsInitial = data10day.totalsInitial.slice(0, data5day.totalsInitial.length - 10);
-        data10day.fatalitiesInitial = data10day.fatalitiesInitial.slice(0, data5day.totalsInitial.length - 10);
         data10day = calculate(data10day);
         cutToSize(data10day, data.activeCalculated.length);
         data.activeCalculated10daysAgo = data10day.activeCalculated;
@@ -151,7 +149,6 @@ function recalculateForDate(days, initialData) {
 
         var dataFixed = JSON.parse(JSON.stringify(initialData));
         dataFixed.totalsInitial = dataFixed.totalsInitial.slice(0, data.fixComparition);
-        dataFixed.fatalitiesInitial = dataFixed.fatalitiesInitial.slice(0, data.fixComparition);
         dataFixed = calculate(dataFixed);
         cutToSize(dataFixed, data.activeCalculated.length);
         data.activeCalculatedFixed = dataFixed.activeCalculated;
@@ -260,8 +257,6 @@ function startVue(data) {
             ventilatorRate: ventilatorRate,
             totalInfectionEstimate: totalInfectionEstimate,
             recoveryDays: recoveryDays,
-            fatalityRateOptimal: fatalityRateOptimal,
-            fatalityRateSuboptimal: fatalityRateSuboptimal,
             activeRegion: getHash(),
             daysForTrend: daysForTrend,
             regionData: regionData,
@@ -313,7 +308,6 @@ $(document).ready(function () {
             var region = regionData[countryName];
             if (data[countryName]) {
                 region.totalsInitial = [];
-                region.fatalitiesInitial = [];
                 region.startDate = null;
                 region.fixComparition = -1;
                 var timeseriesRegion = data[countryName];
@@ -328,7 +322,6 @@ $(document).ready(function () {
                     }
                     if (region.startDate != null) {
                         region.totalsInitial.push(timeseriesRegion[j].confirmed);
-                        region.fatalitiesInitial.push(timeseriesRegion[j].death);
                         region.lastDate = currentDate.toLocaleDateString();
                     }
 

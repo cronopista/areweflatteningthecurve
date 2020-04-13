@@ -1,9 +1,6 @@
-
 var totalInfectionEstimate = 0.5;
 var ventilatorRate = 0.023;
 var recoveryDays = 17;
-var fatalityRateOptimal = 0.01;
-var fatalityRateSuboptimal = 0.025;
 var daysForTrend = 5;
 
 

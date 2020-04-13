@@ -1,78 +1,78 @@
-var regionData={
-    "Belgium":{
+var regionData = {
+    "Belgium": {
         ventilators: 5000,
-        ventilatorsSituation:'5,000 (ballpark estimation, could not find figures)',
+        ventilatorsSituation: '5,000 (ballpark estimation, could not find figures)',
         population: 11460000
     },
-    "Brazil":{
+    "Brazil": {
         ventilators: 65411,
         ventilatorsSituation: "<a href='https://saude.estadao.com.br/noticias/geral,governo-busca-opcoes-para-ampliar-leitos-e-respiradores-no-sus-e-fugir-do-cenario-italiano,70003238174'>65,411</a>",
         population: 210000000
     },
 
-    "France":{
+    "France": {
         ventilators: 14000,
         ventilatorsSituation: "<a href='https://www.ft.com/content/42f636be-751d-4ebf-9b55-bf313014769f' target='_blank'>14,000</a>",
         population: 66990000
     },
-    "Germany":{
+    "Germany": {
         ventilators: 25000,
         ventilatorsSituation: "<a href='https://www.nytimes.com/2020/03/17/opinion/coronavirus-europe-germany.html' target='_blank'>25,000</a>",
         population: 83000000
     },
-    "India":{
+    "India": {
         ventilators: 8432,
         ventilatorsSituation: "<a href='https://www.thehindubusinessline.com/news/national/from-best-to-worst-scenario-india-will-need-thousands-of-ventilators-upgraded-health-infra-to-tackle-virus-icmr/article31156295.ece' target='_blank'>8,432</a>",
         population: 1330000000
     },
-    "Iran":{
+    "Iran": {
         ventilators: 7200,
-        ventilatorsSituation:'<a href="https://www.foreignaffairs.com/articles/iran/2020-04-02/sanctions-make-coronavirus-more-deadly" target="_blank">7,200</a>',
+        ventilatorsSituation: '<a href="https://www.foreignaffairs.com/articles/iran/2020-04-02/sanctions-make-coronavirus-more-deadly" target="_blank">7,200</a>',
         population: 81100000
     },
 
-    "Italy":{
+    "Italy": {
         ventilators: 13000,
         ventilatorsSituation: "<a href='https://www.reuters.com/article/us-health-coronavirus-ventilators-insigh/army-joins-the-production-line-as-ventilator-makers-scramble-to-meet-demand-idUSKBN2180JU' target='_blank'>12,000 (guesswork as the real number is hard to find)</a>",
         population: 60500000
     },
 
-    
-    "Portugal":{
-        ventilators: 1142+1142,
+
+    "Portugal": {
+        ventilators: 1142 + 1142,
         ventilatorsSituation: "<a href='https://youtu.be/Bb4mOb_YsCs?t=1225' target='_blank'>1142×2</a>",
         population: 10276617
     },
 
-    "Spain":{
+    "Spain": {
         ventilators: 12000,
         ventilatorsSituation: "<a href='https://www.elespanol.com/ciencia/salud/20200325/escandalo-respiradores-espana-distribuirlos-no-sabe/477202839_0.html' target='_blank'>12,000 (pure guesswork as the real number is currently unknown)</a>",
         population: 46000000
-    
+
     },
-    "Turkey":{
+    "Turkey": {
         ventilators: 17000,
-        ventilatorsSituation:'<a href="https://healthmanagement.org/c/icu/issuearticle/state-of-intensive-care-in-turkey" target="_blank">17,000 (ballpark estimation)</a>',
+        ventilatorsSituation: '<a href="https://healthmanagement.org/c/icu/issuearticle/state-of-intensive-care-in-turkey" target="_blank">17,000 (ballpark estimation)</a>',
         population: 82000000
     },
 
-    "United Kingdom":{
+    "United Kingdom": {
         ventilators: 8000,
-        ventilatorsSituation:'<a href="https://www.theguardian.com/world/2020/mar/30/uk-government-orders-more-ventilators-for-coronavirus-crisis" target="_blank">8,000</a>',
+        ventilatorsSituation: '<a href="https://www.theguardian.com/world/2020/mar/30/uk-government-orders-more-ventilators-for-coronavirus-crisis" target="_blank">8,000</a>',
         population: 66440000
     },
 
-    "US":{
+    "US": {
         ventilators: 170000,
-        ventilatorsSituation:'<a href="https://www.nytimes.com/2020/03/12/upshot/coronavirus-biggest-worry-hospital-capacity.html" target="_blank">170,000</a>',
+        ventilatorsSituation: '<a href="https://www.nytimes.com/2020/03/12/upshot/coronavirus-biggest-worry-hospital-capacity.html" target="_blank">170,000</a>',
         population: 327200000
     },
 
-    "New York":{
+    "New York": {
         startDate: new Date(2020, 2, 2),
         ventilators: 12000,
         fixComparition: 14,
-        ventilatorsSituation:'<a href="https://www.nytimes.com/2020/03/17/nyregion/ny-coronavirus-ventilators.html" target="_blank">12,000</a>',
+        ventilatorsSituation: '<a href="https://www.nytimes.com/2020/03/17/nyregion/ny-coronavirus-ventilators.html" target="_blank">12,000</a>',
         population: 20000000,
         totalsInitial: [
             1,
@@ -115,56 +115,13 @@ var regionData={
             159937,
             170512,
             180458
-        ],
-        fatalitiesInitial: [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            3,
-            10,
-            13,
-            16,
-            34,
-            42,
-            60,
-            117,
-            158,
-            210,
-            385,
-            519,
-            728,
-            965,
-            1220,
-            1550,
-            1940,
-            2468,
-            2935,
-            3565,
-            4159,
-            4758,
-            5489,
-            6208,
-            7067,
-            7844,
-            8627
-    
         ]
     },
-    "California":{
+    "California": {
         startDate: new Date(2020, 2, 2),
         ventilators: 15000,
         fixComparition: 17,
-        ventilatorsSituation:'15,000 (<a href="https://www.nytimes.com/2020/03/23/us/california-coronavirus-testing-masks.html" target="_blank">guesswork, as the data seems currently unavailable</a>)',
+        ventilatorsSituation: '15,000 (<a href="https://www.nytimes.com/2020/03/23/us/california-coronavirus-testing-masks.html" target="_blank">guesswork, as the data seems currently unavailable</a>)',
         population: 40000000,
         totalsInitial: [
             21,
@@ -207,56 +164,13 @@ var regionData={
             19043,
             21324,
             22421
-        ],
-        fatalitiesInitial: [
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            2,
-            3,
-            4,
-            4,
-            5,
-            6,
-            7,
-            12,
-            13,
-            18,
-            23,
-            24,
-            30,
-            39,
-            50,
-            67,
-            90,
-            103,
-            124,
-            132,
-            155,
-            188,
-            212,
-            250,
-            282,
-            323,
-            351,
-            393,
-            479,
-            506,
-            622,
-            632
-    
         ]
     },
-    "Minnesota":{
+    "Minnesota": {
         startDate: new Date(2020, 2, 6),
-        ventilators: 2444+800,
+        ventilators: 2444 + 800,
         fixComparition: 12,
-        ventilatorsSituation:'<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
+        ventilatorsSituation: '<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
         population: 5000000,
         totalsInitial: [
             1,
@@ -296,46 +210,6 @@ var regionData={
             1242,
             1335,
             1427
-        ],
-        fatalitiesInitial: [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
-            2,
-            4,
-            5,
-            9,
-            10,
-            12,
-            18,
-            18,
-            22,
-            24,
-            29,
-            30,
-            34,
-            39,
-            50,
-            57,
-            64
-    
         ]
     }
 
