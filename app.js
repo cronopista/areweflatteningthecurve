@@ -120,7 +120,61 @@ function createChart(data) {
 }
 
 
+function createDailyIncreaseChart(initialData) {
+    
+    
+    
+    document.getElementById('growthChart').remove();
+    document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
+    var ctx = document.getElementById('growthChart');
 
+    var data = JSON.parse(JSON.stringify(initialData));
+    data.labels = calculateLabels(data.startDate, data.totalsInitial.length);
+    data.increase = [0];
+    for(var i=1;i<data.totalsInitial.length;i++){
+        data.increase.push(data.totalsInitial[i]-data.totalsInitial[i-1]);
+    }
+
+    var chartData = {
+        labels: data.labels,
+        datasets: [{
+            label: 'Daily increase to date',
+            data: data.increase,
+            backgroundColor:
+                'rgba(0, 0, 100, 0.4)',
+            borderColor:
+                'rgba(0, 0, 100, 1)',
+            borderWidth: 2,
+            pointRadius: 0
+        }]
+    };
+   
+    new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+
+                        return "Increase: " + tooltipItem.yLabel.toLocaleString();
+                    }
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }]
+            }
+        }
+    });
+}
 
 function recalculateForDate(days, initialData) {
 
@@ -199,6 +253,10 @@ function startVue(data) {
             nearFuture: function (event) {
                 app.$data.activeChart = 'nearFuture';
                 createChart(recalculateForDate(10, regionData[app.$data.activeRegion]));
+            },
+            dailyIncrease: function(){
+                app.$data.activeChart = 'dailyIncrease';
+                createDailyIncreaseChart(regionData[app.$data.activeRegion]);
             },
             changeRegion: function () {
                 window.location.hash = app.$data.activeRegion;
