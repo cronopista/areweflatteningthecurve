@@ -86,6 +86,18 @@ var regionData = {
         ventilatorsSituation: '<a href="https://www.nytimes.com/2020/03/12/upshot/coronavirus-biggest-worry-hospital-capacity.html" target="_blank">170,000</a>',
         population: 327200000
     },
+    "California": {
+        ventilators: 15000,
+        fixComparition: 15,
+        ventilatorsSituation: '15,000 (<a href="https://www.nytimes.com/2020/03/23/us/california-coronavirus-testing-masks.html" target="_blank">guesswork, as the data seems currently unavailable</a>)',
+        population: 40000000
+    },
+    "Minnesota": {
+        ventilators: 2444 + 800,
+        fixComparition: 18,
+        ventilatorsSituation: '<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
+        population: 5000000
+    },
     "New York": {
         ventilators: 12000,
         fixComparition: 12,
@@ -98,17 +110,17 @@ var regionData = {
         ventilatorsSituation: '<a href="https://www.politico.com/states/new-jersey/story/2020/03/26/new-jersey-officials-planning-for-possibility-of-rationing-ventilators-1269246" target="_blank">4,500</a>',
         population: 8800000
     },
-    "California": {
-        ventilators: 15000,
-        fixComparition: 15,
-        ventilatorsSituation: '15,000 (<a href="https://www.nytimes.com/2020/03/23/us/california-coronavirus-testing-masks.html" target="_blank">guesswork, as the data seems currently unavailable</a>)',
-        population: 40000000
+    "Oregon": {
+        ventilators: 762+400,
+        fixComparition: 30,
+        ventilatorsSituation: '<a href="https://www.oregonlive.com/coronavirus/2020/04/oregon-sends-140-ventilators-to-new-york-gov-kate-brown-we-are-all-in-this-together.html" target="_blank">762 + 400</a>',
+        population: 4218000
     },
-    "Minnesota": {
-        ventilators: 2444 + 800,
-        fixComparition: 18,
-        ventilatorsSituation: '<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
-        population: 5000000
+    "Wisconsin": {
+        ventilators: 1200 + 800,
+        fixComparition: 24,
+        ventilatorsSituation: '<a href="https://www.wuwm.com/post/coronavirus-ventilators-explained-milwaukee-respiratory-experts#stream/0" target="_blank">1,200</a>',
+        population: 5820000
     }
 
 };
