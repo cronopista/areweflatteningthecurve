@@ -192,9 +192,10 @@ function calculate(initialData, dateLimit) {
     var dates = calculateDates(initialData.startDate, data.totals.length);
     data.healthCareLimitDate = dates[hcLimitIndex];
     data.healthCareLimitCalculated = data.totals[hcLimitIndex];
+    data.healthCareLimitIndex = hcLimitIndex;
     var dateLimitIndex = findDateLimitIndex(dates, dateLimit);
     var length = calculateLength(hcLimitIndex, dateLimitIndex);
-    cutToSize(data, length);
+    cutToSize(data, dateLimitIndex);
 
     console.info(data);
 

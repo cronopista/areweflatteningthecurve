@@ -74,48 +74,53 @@ function createChart(data) {
         });
     }
 
+    var options={
+        maintainAspectRatio: false,
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem, data) {
+
+                    return "Active: " + tooltipItem.yLabel.toLocaleString();
+                }
+            }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    callback: function (value, index, values) {
+                        return value.toLocaleString();
+                    }
+                }
+            }]
+        }
+    };
+
+    if(data.healthCareLimitIndex <= data.labels.length){
+        options.annotation = {
+            annotations: [{
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: data.healthCareLimit,
+                borderColor: 'tomato',
+                borderDash: [2, 2],
+                borderWidth: 2,
+                label: {
+                    backgroundColor: "rgb(255,255,255,0.8)",
+                    fontColor: "black",
+                    content: "Health care system capacity: " + data.healthCareLimit.toLocaleString(),
+                    enabled: true,
+                    yAdjust: -11
+                }
+            }]
+        };
+    }
+
     new Chart(ctx, {
         type: 'line',
         data: chartData,
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                callbacks: {
-                    label: function (tooltipItem, data) {
-
-                        return "Active: " + tooltipItem.yLabel.toLocaleString();
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        callback: function (value, index, values) {
-                            return value.toLocaleString();
-                        }
-                    }
-                }]
-            },
-            annotation: {
-                annotations: [{
-                    type: 'line',
-                    mode: 'horizontal',
-                    scaleID: 'y-axis-0',
-                    value: data.healthCareLimit,
-                    borderColor: 'tomato',
-                    borderDash: [2, 2],
-                    borderWidth: 2,
-                    label: {
-                        backgroundColor: "rgb(255,255,255,0.8)",
-                        fontColor: "black",
-                        content: "Health care system capacity: " + data.healthCareLimit.toLocaleString(),
-                        enabled: true,
-                        yAdjust: -11
-                    }
-                }]
-            }
-        }
+        options: options
     });
 }
 
@@ -252,7 +257,7 @@ function startVue(data) {
             },
             nearFuture: function (event) {
                 app.$data.activeChart = 'nearFuture';
-                createChart(recalculateForDate(10, regionData[app.$data.activeRegion]));
+                createChart(recalculateForDate(50, regionData[app.$data.activeRegion]));
             },
             dailyIncrease: function(){
                 app.$data.activeChart = 'dailyIncrease';

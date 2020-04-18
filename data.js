@@ -93,9 +93,9 @@ var regionData = {
         population: 40000000
     },
     "Minnesota": {
-        ventilators: 2444 + 800,
+        ventilators: 2818 + 800,
         fixComparition: 18,
-        ventilatorsSituation: '<a href="https://mn.gov/covid19/data/response.jsp" target="_blank">2,444 + 800</a>',
+        ventilatorsSituation: '<a href="https://mn.gov/covid19/data/response-prep/" target="_blank">2,818 + 800</a>',
         population: 5000000
     },
     "New York": {
