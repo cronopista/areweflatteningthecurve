@@ -1,7 +1,12 @@
 var regionData = {
+    "Argentina": {
+        ventilators: 8500,
+        ventilatorsSituation: "<a href='https://www.infobae.com/america/tendencias-america/2020/03/27/respiradores-artificiales-cuantos-hay-en-el-pais-y-por-que-son-importantes-frente-al-coronavirus/'>8,500</a>",
+        population: 44490000
+    },
     "Belgium": {
         ventilators: 5000,
-        ventilatorsSituation: '5,000 (ballpark estimation, could not find figures)',
+        ventilatorsSituation: "5,000 (ballpark estimation, could not find figures)",
         population: 11460000
     },
     "Brazil": {
@@ -40,7 +45,11 @@ var regionData = {
         ventilatorsSituation: "<a href='https://www.reuters.com/article/us-health-coronavirus-ventilators-insigh/army-joins-the-production-line-as-ventilator-makers-scramble-to-meet-demand-idUSKBN2180JU' target='_blank'>12,000 (guesswork as the real number is hard to find)</a>",
         population: 60500000
     },
-    
+    "Japan": {
+        ventilators: 32586,
+        ventilatorsSituation: "<a href='https://www.mhlw.go.jp/wp/hakusyo/kousei/10/dl/02-01-04.pdf' target='_blank'>32,586</a>",
+        population: 126500000
+    },
     "Netherlands": {
         ventilators: 2000,
         ventilatorsSituation: "<a href='https://nltimes.nl/2020/03/24/philips-steps-ventilator-production-covid-19-fight-us-block-distribution-nl' target='_blank'>2,000</a>",
@@ -62,6 +71,12 @@ var regionData = {
         population: 46000000
 
     },
+    "Sweden": {
+        ventilators: 570,
+        ventilatorsSituation: "<a href='https://www.svd.se/tusentals-respiratorer-borta-sedan-90-talet' target='_blank'>570</a>",
+        population: 10230000
+
+    },
     "Switzerland": {
         ventilators: 750,
         ventilatorsSituation: "<a href='https://lenews.ch/2020/03/14/coronavirus-swiss-hospitals-have-around-750-breathing-ventilators/' target='_blank'>750</a>",
@@ -71,7 +86,7 @@ var regionData = {
     
     "Turkey": {
         ventilators: 17000,
-        ventilatorsSituation: '<a href="https://healthmanagement.org/c/icu/issuearticle/state-of-intensive-care-in-turkey" target="_blank">17,000 (ballpark estimation)</a>',
+        ventilatorsSituation: '<a href="https://www.bbc.com/turkce/haberler-turkiye-52086896" target="_blank">17,000</a>',
         population: 82000000
     },
 

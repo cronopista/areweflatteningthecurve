@@ -28,7 +28,7 @@
     </div>
 
 
-    <div id="mainApp">
+    <div id="mainApp" v-cloak>
         <div id="regionSelectSection">
             <span class="selectText">Select a region:</span>
             <select v-model="activeRegion" v-on:change="changeRegion" class="regionSelection">

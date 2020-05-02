@@ -74,7 +74,7 @@ function createChart(data) {
         });
     }
 
-    var options={
+    var options = {
         maintainAspectRatio: false,
         tooltips: {
             callbacks: {
@@ -96,7 +96,7 @@ function createChart(data) {
         }
     };
 
-    if(data.healthCareLimitIndex <= data.labels.length){
+    if (data.healthCareLimitIndex <= data.labels.length) {
         options.annotation = {
             annotations: [{
                 type: 'line',
@@ -126,9 +126,9 @@ function createChart(data) {
 
 
 function createDailyIncreaseChart(initialData) {
-    
-    
-    
+
+
+
     document.getElementById('growthChart').remove();
     document.getElementById('chartParent').innerHTML = ' <canvas id="growthChart"></canvas>';
     var ctx = document.getElementById('growthChart');
@@ -136,8 +136,12 @@ function createDailyIncreaseChart(initialData) {
     var data = JSON.parse(JSON.stringify(initialData));
     data.labels = calculateLabels(data.startDate, data.totalsInitial.length);
     data.increase = [0];
-    for(var i=1;i<data.totalsInitial.length;i++){
-        data.increase.push(data.totalsInitial[i]-data.totalsInitial[i-1]);
+    for (var i = 1; i < data.totalsInitial.length; i++) {
+        if (data.totalsInitial[i] > data.totalsInitial[i - 1]) {
+            data.increase.push(data.totalsInitial[i] - data.totalsInitial[i - 1]);
+        } else {
+            data.increase.push(0);
+        }
     }
 
     var chartData = {
@@ -153,7 +157,7 @@ function createDailyIncreaseChart(initialData) {
             pointRadius: 0
         }]
     };
-   
+
     new Chart(ctx, {
         type: 'bar',
         data: chartData,
@@ -259,7 +263,7 @@ function startVue(data) {
                 app.$data.activeChart = 'nearFuture';
                 createChart(recalculateForDate(50, regionData[app.$data.activeRegion]));
             },
-            dailyIncrease: function(){
+            dailyIncrease: function () {
                 app.$data.activeChart = 'dailyIncrease';
                 createDailyIncreaseChart(regionData[app.$data.activeRegion]);
             },

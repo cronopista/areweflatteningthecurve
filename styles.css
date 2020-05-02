@@ -112,6 +112,10 @@ a{
     color: whitesmoke;
 }
 
+[v-cloak] {
+    display: none;
+}
+
 @media only screen and (max-width: 1000px) {
     #mainApp { 
         width: 90vw;

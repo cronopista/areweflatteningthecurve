@@ -30,39 +30,40 @@ function getFiveDayGrowthRate(data) {
 }
 
 
-function calculateAverageGrowth(totals, from){
+function calculateAverageGrowth(totals, from) {
     var avg = 0;
-    for(var i=from;i<from+5;i++){
-        avg+= totals[i] - totals[i-1];
+    for (var i = from; i < from + 5; i++) {
+        avg += totals[i] - totals[i - 1];
     }
-    avg =avg/5;
+    avg = avg / 5;
     return avg;
 }
 
-function calculateDailyIncrementGrowth(totals){
+function calculateDailyIncrementGrowth(totals) {
     var oldAvg = calculateAverageGrowth(totals, totals.length - 10);
     var newAvg = calculateAverageGrowth(totals, totals.length - 5);
-  
-    var longTrend = newAvg / oldAvg ;
-    var daily = (longTrend-1)/5 + 1;
 
-    console.info("oldAvg "+oldAvg+" newAvg "+ newAvg+ " longTrend "+ longTrend+ " daily "+ daily);
+    var longTrend = newAvg / oldAvg;
+    var daily = (longTrend - 1) / 5 + 1;
+
+    console.info("oldAvg " + oldAvg + " newAvg " + newAvg + " longTrend " + longTrend + " daily " + daily);
 
     return daily;
 }
 
-function calculateLongTrendTotals(totals, length, maxPopulation){
+function calculateLongTrendTotals(totals, length, maxPopulation) {
     var totalsLong = JSON.parse(JSON.stringify(totals));
     var daily = calculateDailyIncrementGrowth(totals);
     var currentIncrease = calculateAverageGrowth(totals, totals.length - 5);
-    
-    while(totalsLong.length<length){
-        var lastTotal = totalsLong[totalsLong.length-1];
+
+    while (totalsLong.length < length) {
+        var lastTotal = totalsLong[totalsLong.length - 1];
         currentIncrease *= daily;
-        if(lastTotal + currentIncrease>maxPopulation){
+        var newTotal = lastTotal + currentIncrease;
+        if (newTotal > maxPopulation) {
             currentIncrease = 0;
         }
-        totalsLong.push(Math.round(lastTotal+currentIncrease));
+        totalsLong.push(Math.round(newTotal));
     }
 
     console.info(totalsLong);
@@ -131,7 +132,7 @@ function cutToSize(data, length) {
         data.labels = data.labels.slice(0, length);
         data.activeReal = data.activeReal.slice(0, length);
         data.activeCalculated = data.activeCalculated.slice(0, length);
-        data.longTermActive= data.longTermActive.slice(0, length);
+        data.longTermActive = data.longTermActive.slice(0, length);
     }
 }
 
@@ -156,16 +157,16 @@ function findDateLimitIndex(dates, dateLimit) {
 }
 
 
-function calculateLength(hcLimitIndex, dateLimitIndex) {
-    var length = hcLimitIndex + 1;
-    if (dateLimitIndex > hcLimitIndex) {
-        length = dateLimitIndex;
+
+
+
+function correctLongTerm(totals, long) {
+    for (var i = 0; i < totals.length; i++) {
+        if(long[i]>totals[i]*5){
+            long[i] = totals[i]*5;
+        }
     }
-    return length;
 }
-
-
-
 
 
 function calculate(initialData, dateLimit) {
@@ -184,7 +185,7 @@ function calculate(initialData, dateLimit) {
     data.activeCalculated = calculateActive(data.totals);
     data.activeReal = data.activeCalculated.slice(0, data.totalsInitial.length);
     data.labels = calculateLabels(initialData.startDate, data.totals.length);
-    
+
     var longTrend = calculateLongTrendTotals(data.totalsInitial, data.totals.length, maxPopulation);
     data.longTermActive = calculateActive(longTrend);
 
@@ -194,8 +195,9 @@ function calculate(initialData, dateLimit) {
     data.healthCareLimitCalculated = data.totals[hcLimitIndex];
     data.healthCareLimitIndex = hcLimitIndex;
     var dateLimitIndex = findDateLimitIndex(dates, dateLimit);
-    var length = calculateLength(hcLimitIndex, dateLimitIndex);
+   
     cutToSize(data, dateLimitIndex);
+    correctLongTerm(data.activeCalculated,data.longTermActive );
 
     console.info(data);
 
