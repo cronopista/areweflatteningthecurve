@@ -12,7 +12,7 @@ function createChart(data) {
     var chartData = {
         labels: data.labels,
         datasets: [{
-            label: 'Real cases',
+            label: 'Active cases',
             data: data.activeReal,
             backgroundColor:
                 'rgba(0, 0, 100, 0.4)',
@@ -21,7 +21,7 @@ function createChart(data) {
             borderWidth: 2,
             pointRadius: 0
         }, {
-            label: 'Current projection',
+            label: 'Active case projection',
             data: data.activeCalculated,
             backgroundColor:
                 'rgba(0, 0, 100, 0.1)',
@@ -29,49 +29,11 @@ function createChart(data) {
                 'rgba(0, 0, 100, 1)',
             borderWidth: 2,
             pointRadius: 0
-        }, {
-            label: '5 days ago',
-            data: data.activeCalculated5daysAgo,
-            backgroundColor:
-                'transparent',
-            borderColor:
-                'rgba(0, 0, 100, 0.8)',
-            borderWidth: 1,
-            pointRadius: 0
-        }, {
-            label: "10 days ago",
-            data: data.activeCalculated10daysAgo,
-            backgroundColor:
-                'transparent',
-            borderColor:
-                'rgba(0, 0, 100, 0.3)',
-            borderWidth: 1,
-            pointRadius: 0
-        }, {
-            label: "On " + data.labels[data.fixComparition],
-            data: data.activeCalculatedFixed,
-            backgroundColor:
-                'transparent',
-            borderColor:
-                'rgba(0, 0, 100, 0.3)',
-            borderWidth: 1,
-            borderDash: [4, 4],
-            pointRadius: 0
         }]
     };
     if (!data.activeCalculated10daysAgo) {
         chartData.datasets = chartData.datasets.splice(0, 2);
-        chartData.datasets.push({
-            label: 'Long term trend',
-            data: data.longTermActive,
-            backgroundColor:
-                'rgba(0, 100, 0, 0.1)',
-            borderColor:
-                'rgba(0, 100, 0, 0.9)',
-            borderWidth: 1,
-            borderDash: [4, 4],
-            pointRadius: 0
-        });
+        
     }
 
     var options = {
@@ -96,26 +58,7 @@ function createChart(data) {
         }
     };
 
-    if (data.healthCareLimitIndex <= data.labels.length) {
-        options.annotation = {
-            annotations: [{
-                type: 'line',
-                mode: 'horizontal',
-                scaleID: 'y-axis-0',
-                value: data.healthCareLimit,
-                borderColor: 'tomato',
-                borderDash: [2, 2],
-                borderWidth: 2,
-                label: {
-                    backgroundColor: "rgb(255,255,255,0.8)",
-                    fontColor: "black",
-                    content: "Health care system capacity: " + data.healthCareLimit.toLocaleString(),
-                    enabled: true,
-                    yAdjust: -11
-                }
-            }]
-        };
-    }
+   
 
     new Chart(ctx, {
         type: 'line',
@@ -191,36 +134,6 @@ function recalculateForDate(days, initialData) {
     dateLimit.setDate(dateLimit.getDate() + days);
     var data = calculate(initialData, dateLimit);
 
-
-    var data5day = JSON.parse(JSON.stringify(initialData));
-    data5day.totalsInitial = data5day.totalsInitial.slice(0, data5day.totalsInitial.length - 5);
-    data5day = calculate(data5day);
-    cutToSize(data5day, data.activeCalculated.length);
-    data.activeCalculated5daysAgo = data5day.activeCalculated;
-
-
-    if (data.healthCareLimitDate > data5day.healthCareLimitDate) {
-        data.areWe = 'Yes';
-    } else {
-        data.areWe = 'No';
-    }
-
-    if (days > 1000) {
-        var data10day = JSON.parse(JSON.stringify(initialData));
-        data10day.totalsInitial = data10day.totalsInitial.slice(0, data5day.totalsInitial.length - 10);
-        data10day = calculate(data10day);
-        cutToSize(data10day, data.activeCalculated.length);
-        data.activeCalculated10daysAgo = data10day.activeCalculated;
-
-
-        var dataFixed = JSON.parse(JSON.stringify(initialData));
-        dataFixed.totalsInitial = dataFixed.totalsInitial.slice(0, data.fixComparition);
-        dataFixed = calculate(dataFixed);
-        cutToSize(dataFixed, data.activeCalculated.length);
-        data.activeCalculatedFixed = dataFixed.activeCalculated;
-    }
-
-
     return data;
 
 }
@@ -233,8 +146,7 @@ function startVue(data) {
     return new Vue({
         el: '#mainApp',
         data: {
-            activeChart: 'bigPicture',
-            ventilatorRate: ventilatorRate,
+            activeChart: 'nearFuture',
             totalInfectionEstimate: totalInfectionEstimate,
             recoveryDays: recoveryDays,
             activeRegion: getHash(),
@@ -246,19 +158,16 @@ function startVue(data) {
         mounted() {
             window.addEventListener(
                 'hashchange', function () {
-                    app.$data.activeChart = 'bigPicture';
+                    app.$data.activeChart = 'nearFuture';
                     app.$data.activeRegion = getHash();
-                    var newData = recalculateForDate(2000, regionData[app.$data.activeRegion]);
+                    var newData = recalculateForDate(50, regionData[app.$data.activeRegion]);
                     app.$data.region = newData;
                     createChart(newData);
                 }
             );
         },
         methods: {
-            bigPicture: function (event) {
-                app.$data.activeChart = 'bigPicture';
-                createChart(recalculateForDate(2000, regionData[app.$data.activeRegion]));
-            },
+            
             nearFuture: function (event) {
                 app.$data.activeChart = 'nearFuture';
                 createChart(recalculateForDate(50, regionData[app.$data.activeRegion]));
@@ -367,10 +276,10 @@ function loadStateData(data) {
 $(document).ready(function () {
     $.getJSON("https://pomber.github.io/covid19/timeseries.json", function (data) {
         loadCountryData(data);
-        $.getJSON("https://covidtracking.com/api/v1/states/daily.json", function (data) {
+        $.getJSON("https://api.covidtracking.com/v1/states/daily.json", function (data) {
             loadStateData(data);
             var hashRegion = getHash();
-            var calculatedData = recalculateForDate(2000, regionData[hashRegion]);
+            var calculatedData = recalculateForDate(50, regionData[hashRegion]);
             app = startVue(calculatedData);
             createChart(calculatedData);
         });

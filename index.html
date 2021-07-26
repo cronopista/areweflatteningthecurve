@@ -23,8 +23,7 @@
 <body>
     <div class="title">
 
-        <h1>Are we <a href="https://www.livescience.com/coronavirus-flatten-the-curve.html" target="_blank">flattening
-                the curve?</a></h1>
+        <h1>Are we flattening the curve?</h1>
     </div>
 
 
@@ -39,19 +38,9 @@
 
         </div>
 
-        <span class="weAre" v-bind:class="{ weAreNot:  region.areWe == 'No' }">{{region.areWe}}.</span>
-        <span v-if="region.areWe == 'Yes' ">
-            Our projection is better than it was 5 days ago.
-        </span>
-        <span v-if="region.areWe == 'No' ">
-            Our projection is worse than it was 5 days ago.
-        </span>
-        At the current contagion rate, we could overwhelm the health care system by
-        <b>{{region.healthCareLimitDate.toLocaleDateString("en-US", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}}</b>.
+       
         <div id="chartButtons">
-            <div class="chartButton " v-on:click="bigPicture"
-                v-bind:class="{ chartButtonInactive: activeChart != 'bigPicture' }">
-                Complete picture</div>
+           
             <div class="chartButton " v-on:click="nearFuture"
                 v-bind:class="{ chartButtonInactive: activeChart != 'nearFuture' }">
                 Near future</div>
@@ -66,13 +55,7 @@
             <canvas id="growthChart"></canvas>
         </div>
 
-        <p class="note">
-            Trends change daily based on the efforts made by governments
-            and citizens. You can see the evolution of the trend by comparing the current projection with the projection
-            from 5 days ago, 10 days ago, and the one from {{region.labels[region.fixComparition]}}, when there were
-            {{region.totals[region.fixComparition].toLocaleString()}}
-            active cases.
-        </p>
+     
         <p class="disclaimer">
             Data updated 3 times daily from the
             <a href="https://github.com/pomber/covid19" target="_blank">Johns Hopkins CSSE repository</a> and 
@@ -83,54 +66,15 @@
 
 
         <h2 id="methodology">Methodology</h2>
+      
+       
         <p>
-            <b>Health care system capacity</b>. It is estimated that <a
-                href="https://www.nytimes.com/2020/03/22/opinion/health/ventilator-shortage-coronavirus-solution.html"
-                target="_blank">{{(ventilatorRate*10000/100).toLocaleString()}}% of cases require ventilators</a>.
-            We are defining the capacity of the health care system by the number of available ventilators.
-            We currently have <b v-html="region.ventilatorsSituation"></b>. When we reach
-            <b>{{region.healthCareLimitCalculated.toLocaleString()}}</b> active cases, we will need
-            <b>{{(Math.round(region.healthCareLimitCalculated*ventilatorRate)).toLocaleString()}} </b>.
-            It may be noted that a big percentage of ventilators are normally in use for other types of patients,
-            so the health care system might actually be overwhelmed much sooner.
+            To calculate the projection, we take the average increase of the last {{daysForTrend}} days.
         </p>
-        <p>
-            <b>Projection of active cases</b>. This is what the future would look like if the contagion rate remained
-            constant as it is today. However, the contagion rate itself varies as the result of efforts made by
-            governments
-            and citizens and it has its own trend,
-            visible in the comparison with previous projections. </p>
-        <p>
-            To calculate the projection, we take the average increase of the last {{daysForTrend}} days and
-            project it into the future until we reach the point
-            where {{(totalInfectionEstimate*10000/100).toLocaleString()}}% of the population has been infected
-            (estimates for total infection vary from <a
-                href="https://www.washingtonpost.com/health/coronavirus-forecasts-are-grim-its-going-to-get-worse/2020/03/11/2a177e0a-63b4-11ea-acca-80c22bbee96f_story.html"
-                target="_blank">
-                40% to 80%</a>).
-            We linearly decrease the growth rate as more people get infected, and subtract the cases that
-            are more than <a
-                href="https://www.who.int/docs/default-source/coronaviruse/who-china-joint-mission-on-covid-19-final-report.pdf"
-                target="_blank">{{recoveryDays}} days</a> old (average recovery time).
-        </p>
-        <p>
-            <b>Long term trend</b>. In the <i>near future</i> view you can see the long term trend curve. This is based
-            on the variation
-            of daily increases instead of the variation in the total number of cases. As a result, this curve is an
-            early
-            indicator of future trends, but it's also less reliable and subject to sudden changes. To make it a litttle
-            bit more stable,
-            we compare the average daily increase of the last 5 days with the average daily increase of the 5 days
-            before those.
-        </p>
+        
      
 
-        <h2>Issues/suggestions</h2>
-        <p>
-            You can open an issue in the <a href="https://github.com/cronopista/areweflatteningthecurve/issues"
-                target="_blank">Github site</a> for this page
-            if you think that the methodology can be improved or the data is incorrect.
-        </p>
+      
 
 
     </div>

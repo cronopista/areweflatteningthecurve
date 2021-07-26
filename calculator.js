@@ -1,5 +1,4 @@
 var totalInfectionEstimate = 0.5;
-var ventilatorRate = 0.023;
 var recoveryDays = 17;
 var daysForTrend = 5;
 
@@ -7,9 +6,8 @@ var daysForTrend = 5;
 function initData(initialData) {
     var data = JSON.parse(JSON.stringify(initialData));
 
-    data.areWe = 'No';
-    data.healthCareLimit = Math.round(initialData.ventilators / ventilatorRate);
-    data.healthCareLimitCalculated = 0;
+  
+ 
     data.totals = [];
     data.activeReal = [];
     data.activeCalculated = [];
@@ -20,54 +18,16 @@ function initData(initialData) {
 }
 
 function getFiveDayGrowthRate(data) {
-    var fiveDayGrowthRate = 0;
-    for (i = data.totalsInitial.length - daysForTrend; i < data.totalsInitial.length; i++) {
-        fiveDayGrowthRate += data.totalsInitial[i] / data.totalsInitial[i - 1];
+
+    var trendTotal=0;
+    var rate=0;
+    for (i = 1; i < data.totalsInitial.length; i++) {
+        trendTotal+=i+1;
+        rate+= (data.totalsInitial[i] / data.totalsInitial[i - 1])*(i+1);
     }
 
-    return fiveDayGrowthRate / daysForTrend;
+    return rate / trendTotal;
 
-}
-
-
-function calculateAverageGrowth(totals, from) {
-    var avg = 0;
-    for (var i = from; i < from + 5; i++) {
-        avg += totals[i] - totals[i - 1];
-    }
-    avg = avg / 5;
-    return avg;
-}
-
-function calculateDailyIncrementGrowth(totals) {
-    var oldAvg = calculateAverageGrowth(totals, totals.length - 10);
-    var newAvg = calculateAverageGrowth(totals, totals.length - 5);
-
-    var longTrend = newAvg / oldAvg;
-    var daily = (longTrend - 1) / 5 + 1;
-
-    console.info("oldAvg " + oldAvg + " newAvg " + newAvg + " longTrend " + longTrend + " daily " + daily);
-
-    return daily;
-}
-
-function calculateLongTrendTotals(totals, length, maxPopulation) {
-    var totalsLong = JSON.parse(JSON.stringify(totals));
-    var daily = calculateDailyIncrementGrowth(totals);
-    var currentIncrease = calculateAverageGrowth(totals, totals.length - 5);
-
-    while (totalsLong.length < length) {
-        var lastTotal = totalsLong[totalsLong.length - 1];
-        currentIncrease *= daily;
-        var newTotal = lastTotal + currentIncrease;
-        if (newTotal > maxPopulation) {
-            currentIncrease = 0;
-        }
-        totalsLong.push(Math.round(newTotal));
-    }
-
-    console.info(totalsLong);
-    return totalsLong;
 }
 
 
@@ -132,7 +92,6 @@ function cutToSize(data, length) {
         data.labels = data.labels.slice(0, length);
         data.activeReal = data.activeReal.slice(0, length);
         data.activeCalculated = data.activeCalculated.slice(0, length);
-        data.longTermActive = data.longTermActive.slice(0, length);
     }
 }
 
@@ -160,14 +119,6 @@ function findDateLimitIndex(dates, dateLimit) {
 
 
 
-function correctLongTerm(totals, long) {
-    for (var i = 0; i < totals.length; i++) {
-        if(long[i]>totals[i]*5){
-            long[i] = totals[i]*5;
-        }
-    }
-}
-
 
 function calculate(initialData, dateLimit) {
     var data = initData(initialData);
@@ -186,8 +137,7 @@ function calculate(initialData, dateLimit) {
     data.activeReal = data.activeCalculated.slice(0, data.totalsInitial.length);
     data.labels = calculateLabels(initialData.startDate, data.totals.length);
 
-    var longTrend = calculateLongTrendTotals(data.totalsInitial, data.totals.length, maxPopulation);
-    data.longTermActive = calculateActive(longTrend);
+    
 
     var hcLimitIndex = findHealthCareLimitIndex(data.activeCalculated, data.healthCareLimit);
     var dates = calculateDates(initialData.startDate, data.totals.length);
@@ -197,7 +147,6 @@ function calculate(initialData, dateLimit) {
     var dateLimitIndex = findDateLimitIndex(dates, dateLimit);
    
     cutToSize(data, dateLimitIndex);
-    correctLongTerm(data.activeCalculated,data.longTermActive );
 
     console.info(data);
 
